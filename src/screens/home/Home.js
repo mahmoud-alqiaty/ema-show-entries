@@ -1,19 +1,184 @@
-import React from 'react'
+import React, { useEffect, useState, createContext } from 'react'
+import axios from 'axios'
 import './styles.css'
+import GeneralState from '../general-state/GeneralState';
+import SpcState from '../space-state/SpcState';
+import Regions from '../regions/Regions';
+import ReactLoading from 'react-loading';
+import swal from 'sweetalert';
+
+export const HomeContext = createContext()
 
 const Home = () => {
-    const regions = [
+    const regionsNames = [
         'القاهرة والوجه البحري',
         'السواحل الشمالية',
         'جنوب سيناء والسلاسل',
         'شمال الصعيد',
         'جنوب الصعيد',
     ]
+   
+    const [allGenWeatherPoints, setAllGenWeatherPoints] = useState([])
+
+    const [generalMaps, setGeneralMaps] = useState([])
+    const [spcMaps, setSpcMaps] = useState([])
+
+
+    const [generalInputValue, setGeneralInputValue] = useState("")
+    const [SpcInputValue, setSpcInputValue] = useState("")
+
+    const [uploadGenImg, setUploadGenImg] = useState(false)
+    const [uploadspcImg, setUploadspcImg] = useState(false)
+
+    const [fourDates, setFourDates] = useState([])
+
+
+    // regions
+    const [regions, setRegions] = useState([])
+
+    // spc-state
+    const [mainTitle, setMainTitle] = useState("")
+    const [subTitle, setSubTitle] = useState("")
+
+    const [StartingDay, setStartingDay] = useState(-1)
+
+    const [spcWeatherInputValue, setSpcWeatherInputValue] = useState("")
+    const [spcWarningInputValue, setSpcWarningInputValue] = useState("")
+    
+    const [allSpcWeatherPoints, setAllSpcWeatherPoints] = useState([])
+    const [allSpcWarningPoints, setAllSpcWarningPoints] = useState([])
+
+
+    const [submitting, setSubmitting] = useState(false)
+
+    
+    useEffect(() => {
+
+        const standaredData =  { 
+            icon: '',
+            maxTemp: 0,
+            minTemp: 0,
+            wind: 0,
+            date: '',
+            dsc: []
+        }
+
+        let standeredWeatherData=[]
+        for(let j=0; j<5; j++){
+            const settedDate =  (j===0 || j===1)? fourDates[0] : fourDates[j - 1]
+            standeredWeatherData.push({...standaredData, date: settedDate})
+        }
+
+        let createdRegions = []
+        //create an array of all regions with empty-data
+        for(let i=0; i<regionsNames.length; i++){
+            const singleRegion = {
+                name: regionsNames[i],
+                weatherData: [...standeredWeatherData]
+            }
+            createdRegions.push(singleRegion)
+        }
+
+        setRegions(createdRegions)
+    }, [fourDates])
+    
+    
+
+  //adding general weather maps
+  const uploadImage = (image, GenOrSpc) =>{
+    const formData = new FormData()
+    formData.append(`file`, image)
+    formData.append('upload_preset', 'yyuj32eg')
+
+    if(GenOrSpc === "general"){
+        setUploadGenImg(true)
+    } else {
+        setUploadspcImg(true)
+    }
+
+    axios.post('https://api.cloudinary.com/v1_1/dryhuprvx/image/upload', formData)
+    .then(res=>{
+        if(GenOrSpc === "general"){
+            setGeneralMaps( gen=> [...gen, res.data.url])
+            setGeneralInputValue("")
+            setUploadGenImg(false)
+        } else {
+            setSpcMaps(spc=> [...spc, res.data.url])
+            setSpcInputValue("")
+            setUploadspcImg(false)
+        }
+
+        
+    })
+    .catch(err=>{
+        console.log(err);
+        if(GenOrSpc === "general"){
+            setUploadGenImg(false)
+            setGeneralInputValue("")
+        } else {
+            setUploadspcImg(false)
+            setSpcInputValue("")
+        }
+    })
+
+    
+
+    // CLOUDINARY_URL=cloudinary://589421646377481:oya5U6DXd4EjT9jlpy7UIebDuEM@dryhuprvx
+}
+
+
+    const removePreviewImg = (img, GenOrSpc)=>{
+        if(GenOrSpc === "general"){
+            setGeneralMaps(generalMaps.filter(ele => ele !== img))
+        } else {
+            setSpcMaps(spcMaps.filter(ele => ele !== img))
+        }
+    }
+
+    //adding general four dates
+    const setFourDayes = (day)=>{
+        const weakDayes = [
+            'الأحد',
+            'الإثنين',
+            'الثلاثاء',
+            'الأربعاء',
+            'الخميس',
+            'الجمعة',
+            'السبت',
+        ]
+        
+        const yearMonthes = [
+            'يناير',
+            'فبراير',
+            'مارس',
+            'ابريل',
+            'مايو',
+            'يونيو',
+            'يوليو',
+            'اغسطس',
+            'سبتمبر',
+            'اكتوبر',
+            'نوفمبر',
+            'ديسمبر',
+        ]
+
+        const firstDate = weakDayes[new Date(day).getDay()] + " " + new Date(day).getDate() + " " + yearMonthes[new Date(day).getMonth()] + " " + new Date(day).getFullYear()
+
+        const secondDay = 1000*60*60*24+ +new Date(day)
+        const secondDate = weakDayes[new Date(secondDay).getDay()] + " " + new Date(secondDay).getDate() + " " + yearMonthes[new Date(secondDay).getMonth()] + " " + new Date(secondDay).getFullYear()
+
+        const thirdDay = 2*1000*60*60*24+ +new Date(day)
+        const thirdDate = weakDayes[new Date(thirdDay).getDay()] + " " + new Date(thirdDay).getDate() + " " + yearMonthes[new Date(thirdDay).getMonth()] + " " + new Date(thirdDay).getFullYear()
+
+        const fourthdDay = 3*1000*60*60*24+ +new Date(day)
+        const fourthdDate = weakDayes[new Date(fourthdDay).getDay()] + " " + new Date(fourthdDay).getDate() + " " + yearMonthes[new Date(fourthdDay).getMonth()] + " " + new Date(fourthdDay).getFullYear()
+
+        setFourDates([firstDate, secondDate, thirdDate, fourthdDate])
+    }
 
     const phenomenaOptions = [
         'غائم',
         'غائم جزئي',
-        'مشمس',
         'ممطر',
         'رعدي',
         'مطر رعدي',
@@ -21,177 +186,93 @@ const Home = () => {
         'شبورة',
         'ضباب',
     ]
+
+
+    const contextValue = {
+        allGenWeatherPoints, setAllGenWeatherPoints,
+        generalMaps, setGeneralMaps,
+        spcMaps, setSpcMaps,
+        generalInputValue, setGeneralInputValue,
+        SpcInputValue, setSpcInputValue,
+        uploadGenImg, setUploadGenImg,
+        uploadspcImg, setUploadspcImg,
+        fourDates, setFourDates,
+        regions, setRegions,
+        mainTitle, setMainTitle,
+        subTitle, setSubTitle,
+        spcWeatherInputValue, setSpcWeatherInputValue,
+        allSpcWeatherPoints, setAllSpcWeatherPoints,
+        spcWarningInputValue, setSpcWarningInputValue,
+        allSpcWarningPoints, setAllSpcWarningPoints,
+        regionsNames, phenomenaOptions,
+        setStartingDay
+    }
+
+
+    const handleSubmit = (e)=>{
+        e.preventDefault();
+        setSubmitting(true) 
+        
+        let data = {
+            generalWeatherState: allGenWeatherPoints,
+            mapsArray: generalMaps,
+            regionsTempPage: regions,
+            spacCasePage: { 
+                mainTitle,
+                subTitle,
+                StartingDay,
+                allSpcWeatherPoints,
+                allSpcWarningPoints,
+                spcMaps
+            },
+            _id: '635259f5f3b78e569fbbeb62',
+        }
+
+        axios.put('https://ema-show-backend.herokuapp.com/mapsAndSats/maps/635259f5f3b78e569fbbeb62', data)
+        .then(res=>{
+            console.log("res: ", res.data);
+            setSubmitting(false) 
+            swal("تم الإرسال", "", "success");
+        })
+        .catch(err=>{
+            console.log(err);
+            setSubmitting(false) 
+            swal("فشل الإرسال", err.message, "success");
+        })
+
+        console.log("submited-data: ", data);
+    }
+    
   return (
-    <div className='home-container'>
-        <form>
-            {/* ============home-entries============== */}
-            <div className='section home-entries'>
-                <h1 className='section-header'>
-                    حالة الطقس المتوقعة
-                </h1>
-                <div>
-                    <input type='text' />
-                </div>
-                <div>
-                    <input type='text' />
-                </div>
-                <div>
-                    <input type='text' />
-                </div>
-                <div>
-                    <input type='text' />
-                </div>
-            </div>
+    <HomeContext.Provider value={contextValue}>
+        <div className='home-container'>
+            <form>
+                {/* ============home-entries============== */}
+                <GeneralState uploadImage={uploadImage} removePreviewImg={removePreviewImg}/>
 
-            <hr />
+                <hr />
 
-            {/* ==============regions-entries============= */}
-            <div className='section regions-entries'>
-                <h1 className='section-header'>
-                     حالة الطقس على مناطق الجمهورية
-                </h1>
-                <div>
-                    <h3>تاريخ اول يوم</h3>
-                    <div className="mb-3">
-                        <input type="date" />
-                    </div>
-                </div>
-                {
-                    regions.map(region=>
-                        <div className='region' key={region}>
-                            <h2 className='region-name'>
-                                {region}
-                            </h2>
+                {/* ==============regions-entries============= */}
+                <Regions setFourDayes={setFourDayes} />
 
-                            <div className='day-section'>
-                                <h5>اليوم الأول</h5>
-                                {
-                                    ['صباحا', 'مساء'].map(t=>
-                                        <div key={t} className='day-pn-am'>
-                                            <h6>{t}</h6>
-                                            <div className='d-flex' >
-                                                <div>
-                                                    <h6>الظاهرة</h6>
-                                                    <select>
-                                                        {
-                                                            phenomenaOptions.map(ph=>
-                                                               <option key={ph} value={ph}>
-                                                                {ph}
-                                                               </option> 
-                                                            )
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <h6>عظمي</h6>
-                                                    <input type='number' />
-                                                </div>
-                                                <div>
-                                                    <h6>صغري</h6>
-                                                    <input type='number' />
-                                                </div>
-                                                <div>
-                                                    <h6>سرعة رياح</h6>
-                                                    <input type='number' />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )
-                                }
-                            </div>
+                <hr />
 
-                            {
-                                ['اليوم الثاني', 'اليوم الثالث', 'اليوم الرابع',].map(day=>
-                                <div key={day} className='day-section'>
-                                    <h5>{day}</h5>
-                                    <div>
-                                        <div className='d-flex' >
-                                            <div>
-                                                <h6>الظاهرة</h6>
-                                                <select>
-                                                    {
-                                                        phenomenaOptions.map(ph=>
-                                                            <option key={ph} value={ph}>
-                                                            {ph}
-                                                            </option> 
-                                                        )
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <h6>عظمي</h6>
-                                                <input type='number' />
-                                            </div>
-                                            <div>
-                                                <h6>صغري</h6>
-                                                <input type='number' />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                )
-                            }
-                        </div>
-                    )
-                }
-
-            </div>
-
-
-            <hr />
-
-            {/* ==============spec-weather-state============= */}
-            <div className='section spec-weather-state'>
-                <h1 className='section-header'>
-                    حالة خاصة
-                </h1>
-                <div className='title-section inner-section'>
-                    <div>
-                        <h2>عنوان رئيسي</h2>
-                        <input type='text' />
-                    </div>
-                    <div>
-                        <h3>عنوان فرعي</h3>
-                        <input type='text' />
-                    </div>
+                {/* ==============spec-weather-state============= */}
+                <SpcState uploadImage={uploadImage} removePreviewImg={removePreviewImg} />
+                
+                <div className='submit-btn-container'>
+                    <button type='submit' className='submit-btn' onClick={handleSubmit}>
+                        {
+                            submitting? (
+                                <ReactLoading type='spin' color='white' height={40} width={40} />
+                            ) : "إرسال"
+                        }
+                    </button>
                 </div>
 
-                <div className='content inner-section'>
-                    <div className='weather-state-points'>
-                        <h4>العناصر الرئيسية</h4>
-                        <div>
-                            <input type='text' />
-                        </div>
-                        <div>
-                            <input type='text' />
-                        </div>
-                        <div>
-                            <input type='text' />
-                        </div>
-                        <div>
-                            <input type='text' />
-                        </div>
-                    </div>
-
-                    <div className='warning-points'>
-                        <h4>تحذيرات</h4>
-                        <div>
-                            <input type='text' />
-                        </div>
-                        <div>
-                            <input type='text' />
-                        </div>
-                        <div>
-                            <input type='text' />
-                        </div>
-                        <div>
-                            <input type='text' />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+    </HomeContext.Provider>
   )
 }
 

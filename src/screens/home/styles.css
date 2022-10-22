@@ -4,6 +4,7 @@
     min-height: 100vh;
     /* background-image: url('../../images/protruding-squares\ \(2\).svg'); */
     /* background-image: url('../../images/endless-constellation\ \(2\).svg'); */
+    /* background-image: url('../../images/diamond-sunset.png'); */
     background-repeat: no-repeat;
     background-size: cover;
     padding: 10px 20px;
@@ -12,6 +13,21 @@
 .section{
     background-color: rgba(0, 0, 0, 0.1);
     padding: 20px;
+}
+
+input:not("[type: radio]"){
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.adding-btn{
+    font-size: 23px;
+    font-weight: bold;
+    background-color: blue;
+    color: white;
+    padding:  0 15px;
+
 }
 
 
@@ -24,6 +40,69 @@
     width: 90%;
 }
 
+
+.all-weather-points li{
+    color: blue;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* =======================maps-entries=================== */
+.maps-entries .allInputs-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.allPreviews-container {
+    display: flex;
+    justify-content: baseline !important;
+    height: 200px;
+    margin-top: 30px;
+    position: relative;
+    /* flex-wrap: wrap; */
+}
+
+.allPreviews-container .loading-container {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.allPreviews-container .priview-img-container {
+    border: 1px solid #333;
+    width: 32%;
+    height: 100%;
+    position: relative;
+    margin-left: 5px;
+}
+
+.allPreviews-container .priview-img-container .remove-icon {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    font-size: 30px;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    background-color: blue;
+    line-height: 30px;
+    color: white;
+    /* border-radius: 50; */
+}
+
+.allPreviews-container .priview-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+}
 
 /* ==============regions-entries============= */
 
@@ -63,7 +142,7 @@
 }
 
 
-/* ==============spec-weather-state============= */
+/* ==============spec-weather-case============= */
 .spec-weather-state .title-section input, 
 .spec-weather-state .content input{
     width: 90%;
@@ -75,4 +154,47 @@
     background-color: rgba(0, 0, 0, 0.3);
     margin-bottom: 30px;
     padding: 30px;
+}
+
+.spc-case-start{
+    margin-bottom: 25px;
+}
+.spc-case-start input, .spc-case-start label{
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 20px !important;
+    margin-bottom: 0;
+}
+
+.spc-case-start label{
+    width: 100px !important;
+    height: 40px !important;
+    margin-right: 10px;
+    line-height: 30px;
+}
+
+
+
+.submit-btn-container{
+    display: flex;
+    justify-content: end;
+    margin-bottom: 30px;
+    padding: 30px;
+}
+
+.submit-btn{
+    width: 150px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    font-size: 24px;
+    color: White;
+    background-color: blue;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: stretch;
 }
