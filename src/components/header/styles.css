@@ -1,22 +1,23 @@
 .header-container{
     width: 100%;
-    height: 100px;
+    height: 90px;
     background-color: blue;
     font-family: Cairo-Bold;
-    padding: 0 30px;
-    padding-bottom: 15px;
+    padding: 0 20px;
+    /* padding-bottom: 15px; */
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 200000;
     
 }
 
 .name{
     font-weight: bold;
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     color: white;
    
 }
@@ -27,7 +28,7 @@
 
 .ema-name{
     color: #FDD807;
-    font-size: 2.5rem;
+    font-size: 2rem;
     /* font-family: "Lateef-Bold"; */
     font-family: "Gulzar-Regular";
     line-height: 0.6;

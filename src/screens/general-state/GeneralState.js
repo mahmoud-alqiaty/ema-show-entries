@@ -17,6 +17,10 @@ const GeneralState = ({uploadImage, removePreviewImg}) => {
     }
   }
 
+  const removeWeatherPoint = (index) =>{
+    setAllGenWeatherPoints(allGenWeatherPoints.filter((p, pIndex)=> pIndex !== index ))
+  }
+
 
   return (
     <>
@@ -32,7 +36,16 @@ const GeneralState = ({uploadImage, removePreviewImg}) => {
             allGenWeatherPoints.length ? (
                 <ul className='all-weather-points'>
                     {
-                        allGenWeatherPoints.map((point, index)=><li key={index}>{point}</li>)
+                        allGenWeatherPoints.map((point, index)=>
+                        <li key={index}>
+                          <span>
+                            {point} 
+                          </span>
+                          <span onClick={()=>removeWeatherPoint(index)}>
+                            &times;
+                          </span>
+                        </li>
+                        )
                     }
                 </ul>
             ):null
@@ -54,7 +67,7 @@ const GeneralState = ({uploadImage, removePreviewImg}) => {
               {
                 uploadGenImg? (
                   <div className='loading-container'>
-                      <ReactLoading type='spokes' color='black' height={100} width={100} />
+                      <ReactLoading type='spokes' color='white' height={100} width={100} />
                   </div>
                 ): null
               }

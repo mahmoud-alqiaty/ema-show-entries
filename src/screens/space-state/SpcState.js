@@ -28,6 +28,14 @@ const SpcState = ({uploadImage, removePreviewImg}) => {
         setStartingDay(numberedValue)
     }
 
+    const removeWeatherPoint = (index) =>{
+        setAllSpcWeatherPoints(allSpcWeatherPoints.filter((p, pIndex)=> pIndex !== index ))
+    }
+
+    const removeWeatherWarningPoint = (index) =>{
+        setAllSpcWarningPoints(allSpcWarningPoints.filter((p, pIndex)=> pIndex !== index ))
+    }
+
 
 
   return (
@@ -84,7 +92,16 @@ const SpcState = ({uploadImage, removePreviewImg}) => {
                 allSpcWeatherPoints.length ? (
                     <ul className='all-weather-points'>
                         {
-                            allSpcWeatherPoints.map((point, index)=><li key={index}>{point}</li>)
+                            allSpcWeatherPoints.map((point, index)=>
+                            <li key={index}>
+                                <span>
+                                    {point} 
+                                </span>
+                                <span onClick={()=>removeWeatherPoint(index)}>
+                                    &times;
+                                </span>
+                            </li>
+                            )
                         }
                     </ul>
                 ):null
@@ -101,7 +118,15 @@ const SpcState = ({uploadImage, removePreviewImg}) => {
                 allSpcWarningPoints.length ? (
                     <ul className='all-weather-points'>
                         {
-                            allSpcWarningPoints.map((point, index)=><li key={index}>{point}</li>)
+                            allSpcWarningPoints.map((point, index)=>
+                            <li key={index}>
+                                 <span>
+                                    {point} 
+                                </span>
+                                <span onClick={()=>removeWeatherWarningPoint(index)}>
+                                    &times;
+                                </span>
+                            </li>)
                         }
                     </ul>
                 ):null
@@ -120,7 +145,7 @@ const SpcState = ({uploadImage, removePreviewImg}) => {
                 {
                     uploadspcImg? (
                         <div className='loading-container'>
-                            <ReactLoading type='spokes' color='black' height={100} width={100} />
+                            <ReactLoading type='spokes' color='white' height={100} width={100} />
                         </div>
                     ): null
                 }

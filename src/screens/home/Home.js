@@ -12,8 +12,9 @@ export const HomeContext = createContext()
 const Home = () => {
     const regionsNames = [
         'القاهرة والوجه البحري',
-        'السواحل الشمالية',
-        'جنوب سيناء والسلاسل',
+        'السواحل الشمالية الغربية',
+        'السواحل الشمالية الشرقية',
+        'جنوب سيناء وسلاسل جبال البحر الأحمر',
         'شمال الصعيد',
         'جنوب الصعيد',
     ]
@@ -252,14 +253,16 @@ const Home = () => {
 
                 <hr />
 
-                {/* ==============regions-entries============= */}
-                <Regions setFourDayes={setFourDayes} />
+                {/* ==============spec-weather-state============= */}
+                <SpcState uploadImage={uploadImage} removePreviewImg={removePreviewImg} />
+                                
 
                 <hr />
 
-                {/* ==============spec-weather-state============= */}
-                <SpcState uploadImage={uploadImage} removePreviewImg={removePreviewImg} />
-                
+                {/* ==============regions-entries============= */}
+                <Regions setFourDayes={setFourDayes} />
+
+
                 <div className='submit-btn-container'>
                     <button type='submit' className='submit-btn' onClick={handleSubmit}>
                         {
