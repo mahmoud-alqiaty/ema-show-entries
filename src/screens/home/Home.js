@@ -53,36 +53,77 @@ const Home = () => {
     const [submitting, setSubmitting] = useState(false)
 
     
-    useEffect(() => {
+    // useEffect(() => {
 
-        const standaredData =  { 
-            icon: '',
-            maxTemp: 0,
-            minTemp: 0,
-            wind: 0,
-            date: '',
-            dsc: []
-        }
+    //     const standaredData =  { 
+    //         icon: '',
+    //         maxTemp: 0,
+    //         minTemp: 0,
+    //         wind: 0,
+    //         date: '',
+    //         dsc: []
+    //     }
 
-        let standeredWeatherData=[]
-        for(let j=0; j<5; j++){
-            const settedDate =  (j===0 || j===1)? fourDates[0] : fourDates[j - 1]
-            standeredWeatherData.push({...standaredData, date: settedDate})
-        }
+    //     let standeredWeatherData=[]
+    //     for(let j=0; j<5; j++){
+    //         const settedDate =  (j===0 || j===1)? fourDates[0] : fourDates[j - 1]
+    //         standeredWeatherData.push({...standaredData, date: settedDate})
+    //     }
 
-        let createdRegions = []
-        //create an array of all regions with empty-data
-        for(let i=0; i<regionsNames.length; i++){
-            const singleRegion = {
-                name: regionsNames[i],
-                weatherData: [...standeredWeatherData]
-            }
-            createdRegions.push(singleRegion)
-        }
+    //     let createdRegions = []
+    //     //create an array of all regions with empty-data
+    //     for(let i=0; i<regionsNames.length; i++){
+    //         const singleRegion = {
+    //             name: regionsNames[i],
+    //             weatherData: [...standeredWeatherData]
+    //         }
+    //         createdRegions.push(singleRegion)
+    //     }
 
-        setRegions(createdRegions)
-    }, [fourDates])
+    //     setRegions(createdRegions)
+    // }, [fourDates])
     
+    // console.log("regions: ", regions);
+
+
+    //get data from db
+    useEffect(() => {
+        const getallData = async () =>{
+            axios.get("https://ema-show-backend.herokuapp.com/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
+            .then(res=>{
+            //   console.log("res: ", res.data);
+              console.log("fourDates: ", fourDates);
+            if(fourDates.length > 0){
+
+                const updatedRegionsTempPage = res.data.regionsTempPage.map(reg =>{
+                    const updatedWeatherData =  reg.weatherData.map((dayData, dayIndex)=>  (dayIndex===0 || dayIndex===1)? {...dayData, date: fourDates[0]}  : {...dayData, date: fourDates[dayIndex - 1]}  )
+
+                    return{...reg, weatherData: updatedWeatherData}
+                })
+                
+                setRegions(updatedRegionsTempPage)
+                // setRegions(res.data.regionsTempPage)
+            } else{
+                setRegions(res.data.regionsTempPage)
+            }
+            setAllGenWeatherPoints(res.data.generalWeatherState)
+            setGeneralMaps(res.data.mapsArray)
+            setAllSpcWeatherPoints(res.data.spacCasePage?.allSpcWeatherPoints)
+            setSpcMaps(res.data.spacCasePage?.spcMaps)
+            setAllSpcWarningPoints(res.data.spacCasePage?.allSpcWarningPoints)
+            setMainTitle(res.data.spacCasePage?.mainTitle)
+            setSubTitle(res.data.spacCasePage?.subTitle)
+            setStartingDay(res.data.spacCasePage?.StartingDay)
+            })
+            .catch(err=>{
+              console.log(err.message);
+            })
+          }
+      
+          getallData()
+    }, [fourDates])
+
+    console.log("AllGenWeatherPoints: ", allGenWeatherPoints);
     
 
   //adding general weather maps

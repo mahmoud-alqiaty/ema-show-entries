@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { HomeContext } from '../home/Home'
+import ReactLoading from 'react-loading';
 
 import upArrow from '../../images/up-circle.svg'
 import downArrow from '../../images/down-circle.svg'
@@ -55,7 +56,7 @@ const Regions = ({setFourDayes}) => {
     const setRegionwind = (value, regionName, dayIndex)=>{
         const secEditedRegion = regions.map(singleRegion =>{
             if( singleRegion.name === regionName){
-                singleRegion.weatherData[dayIndex] = {...singleRegion.weatherData[dayIndex], wind: value}
+                singleRegion.weatherData[dayIndex] = {...singleRegion.weatherData[dayIndex], wind: Math.ceil(value*1.852)}
                 return singleRegion
             } else{
                 return singleRegion
@@ -100,6 +101,18 @@ const Regions = ({setFourDayes}) => {
     //     )
     // }
 
+    console.log("regions: ", regions);
+
+    const handleShifttingOneDay = ()=>{
+        const updatedRegions = regions.map(reg =>{
+            const updatedWeatherData =  reg.weatherData.map((dayData, dayIndex)=>  (dayIndex===0? {...reg.weatherData[2], date: fourDates[0]} : dayIndex===1? {...dayData, minTemp: reg.weatherData[2].minTemp} : dayIndex===4? {...dayData} : {...reg.weatherData[dayIndex + 1]} ))
+
+            return{...reg, weatherData: updatedWeatherData}
+        })
+        console.log("updatedRegions: ", updatedRegions);
+        
+        setRegions(updatedRegions)
+    }
 
   return (
     <div className='section regions-entries'>
@@ -119,109 +132,144 @@ const Regions = ({setFourDayes}) => {
         </div>
         {
             displayRegions? (
-                <div>
-                    {
-                        regionsNames.map((regionName, regionIndex)=>
-                            <div className='region' key={regionIndex}>
-                                <h2 className='region-name'>
-                                    {regionName}
-                                </h2>
+                <>
+                     <div className='mb-2'>
+                        <button type='button' className='submit-btn' onClick={handleShifttingOneDay}>
+                        إزاحة يوم
+                        </button>
+                    </div>
+                    <div>
+                        {
+                            regionsNames.map((regionName, regionIndex)=>
+                                <div className='region' key={regionIndex}>
+                                    <h2 className='region-name'>
+                                        {regionName}
+                                    </h2>
 
-                                <div className='day-section'>
-                                    <h5>اليوم الأول</h5>
+                                    <div className='day-section'>
+                                        <h5>اليوم الأول</h5>
+                                        {
+                                            ['صباحا', 'مساء'].map((t, periodIndex)=>
+                                                <div key={t} className='day-pn-am'>
+                                                    <h6>{t}</h6>
+                                                    <div className='d-flex' >
+                                                        <div>
+                                                            <h6>الظاهرة</h6>
+                                                            <select 
+                                                            value={regions[regionIndex].weatherData[t === 'صباحا' ? 0 : 1].icon}  
+                                                            onChange={e=>setRegionPhenomena(e.target.value, regionName, periodIndex)}
+                                                            >
+                                                                <option value=''>-------</option>
+                                                                {
+                                                                    t === 'صباحا' ? (
+                                                                        <option value='مشمس'>مشمس</option>
+                                                                    ) : (
+                                                                        <option value='صافي'>صافي</option>
+                                                                    ) 
+
+                                                                }
+                                                                {
+                                                                    phenomenaOptions.map((ph, index)=>
+                                                                    <option key={index} value={ph}>
+                                                                        {ph}
+                                                                    </option> 
+                                                                    )
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        {
+                                                            t === "صباحا" ? (
+                                                                <div>
+                                                                    <h6>عظمي</h6>
+                                                                    <input 
+                                                                    type='number'
+                                                                    value={regions[regionIndex].weatherData[0].maxTemp} 
+                                                                    onChange={e=>setRegionMaxTemp(e.target.value, regionName, periodIndex)} />
+                                                                </div>
+                                                            ) : (
+                                                                <div>
+                                                                    <h6>صغري</h6>
+                                                                    <input 
+                                                                    type='number'
+                                                                    value={regions[regionIndex].weatherData[1].minTemp} 
+                                                                    onChange={e=>setRegionMinTemp(e.target.value, regionName, periodIndex)} />
+                                                                </div>
+                                                            )
+                                                        }
+                                                        
+                                                        <div>
+                                                            <h6>سرعة رياح</h6>
+                                                            <input 
+                                                            type='number'
+                                                            value={Math.floor(regions[regionIndex].weatherData[periodIndex].wind/1.852)}  
+                                                            onChange={e=>setRegionwind(e.target.value, regionName, periodIndex)} 
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    {/* <DesReturn regionName={regionName} dayIndex={periodIndex} /> */}
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+
                                     {
-                                        ['صباحا', 'مساء'].map((t, periodIndex)=>
-                                            <div key={t} className='day-pn-am'>
-                                                <h6>{t}</h6>
+                                        ['اليوم الثاني', 'اليوم الثالث', 'اليوم الرابع',].map((day, dayIndex)=>
+                                        <div key={dayIndex} className='day-section'>
+                                            <h5>{day}</h5>
+                                            <div>
                                                 <div className='d-flex' >
                                                     <div>
                                                         <h6>الظاهرة</h6>
-                                                        <select defaultValue={''} onChange={e=>setRegionPhenomena(e.target.value, regionName, periodIndex)}>
+                                                        <select 
+                                                        value={regions[regionIndex].weatherData[dayIndex + 2].icon} 
+                                                        onChange={e=>setRegionPhenomena(e.target.value, regionName, dayIndex + 2)}
+                                                        >
                                                             <option value=''>-------</option>
-                                                            {
-                                                                t === 'صباحا' ? (
-                                                                    <option value='مشمس'>مشمس</option>
-                                                                ) : (
-                                                                    <option value='صافي'>صافي</option>
-                                                                ) 
-
-                                                            }
+                                                            <option value='مشمس'>مشمس</option>
                                                             {
                                                                 phenomenaOptions.map((ph, index)=>
-                                                                <option key={index} value={ph}>
+                                                                    <option key={index} value={ph}>
                                                                     {ph}
-                                                                </option> 
+                                                                    </option> 
                                                                 )
                                                             }
                                                         </select>
                                                     </div>
-                                                    {
-                                                        t === "صباحا" ? (
-                                                            <div>
-                                                                <h6>عظمي</h6>
-                                                                <input type='number' onChange={e=>setRegionMaxTemp(e.target.value, regionName, periodIndex)} />
-                                                            </div>
-                                                        ) : (
-                                                            <div>
-                                                                <h6>صغري</h6>
-                                                                <input type='number' onChange={e=>setRegionMinTemp(e.target.value, regionName, periodIndex)} />
-                                                            </div>
-                                                        )
-                                                    }
-                                                    
+                                                    <div>
+                                                        <h6>عظمي</h6>
+                                                        <input 
+                                                        type='number' 
+                                                        onChange={e=>setRegionMaxTemp(e.target.value, regionName, dayIndex + 2)} 
+                                                        value={regions[regionIndex].weatherData[dayIndex + 2].maxTemp} 
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <h6>صغري</h6>
+                                                        <input 
+                                                        type='number' 
+                                                        onChange={e=>setRegionMinTemp(e.target.value, regionName, dayIndex + 2)}
+                                                        value={regions[regionIndex].weatherData[dayIndex + 2].minTemp}  
+                                                        />
+                                                    </div>
                                                     <div>
                                                         <h6>سرعة رياح</h6>
-                                                        <input type='number' onChange={e=>setRegionwind(e.target.value, regionName, periodIndex)} />
+                                                        <input 
+                                                        type='number' 
+                                                        onChange={e=>setRegionwind(e.target.value, regionName, dayIndex + 2)} 
+                                                        value={Math.floor(regions[regionIndex].weatherData[dayIndex + 2].wind/1.852)} 
+                                                        />
                                                     </div>
+
                                                 </div>
-                                                {/* <DesReturn regionName={regionName} dayIndex={periodIndex} /> */}
                                             </div>
+                                        </div>
                                         )
                                     }
                                 </div>
-
-                                {
-                                    ['اليوم الثاني', 'اليوم الثالث', 'اليوم الرابع',].map((day, dayIndex)=>
-                                    <div key={dayIndex} className='day-section'>
-                                        <h5>{day}</h5>
-                                        <div>
-                                            <div className='d-flex' >
-                                                <div>
-                                                    <h6>الظاهرة</h6>
-                                                    <select defaultValue={''} onChange={e=>setRegionPhenomena(e.target.value, regionName, dayIndex + 2)}>
-                                                        <option value=''>-------</option>
-                                                        <option value='مشمس'>مشمس</option>
-                                                        {
-                                                            phenomenaOptions.map((ph, index)=>
-                                                                <option key={index} value={ph}>
-                                                                {ph}
-                                                                </option> 
-                                                            )
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <h6>عظمي</h6>
-                                                    <input type='number' onChange={e=>setRegionMaxTemp(e.target.value, regionName, dayIndex + 2)} />
-                                                </div>
-                                                <div>
-                                                    <h6>صغري</h6>
-                                                    <input type='number' onChange={e=>setRegionMinTemp(e.target.value, regionName, dayIndex + 2)} />
-                                                </div>
-                                                <div>
-                                                    <h6>سرعة رياح</h6>
-                                                    <input type='number' onChange={e=>setRegionwind(e.target.value, regionName, dayIndex + 2)} />
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    )
-                                }
-                            </div>
-                        )
-                    } 
-                </div>
+                            )
+                        } 
+                    </div>
+                </>
             ) : null
         }
 

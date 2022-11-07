@@ -155,6 +155,15 @@ input:not("[type: radio]"){
 
 .day-section input{
     height: 40px;
+    font-size: 18px;
+    font-weight: bold;
+
+}
+
+.region input, .region select{
+    height: 40px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 
@@ -175,11 +184,12 @@ input:not("[type: radio]"){
 .spc-case-start{
     margin-bottom: 25px;
 }
-.spc-case-start input, .spc-case-start label{
+.spc-case-start input, .spc-case-start select, .spc-case-start label{
     width: 20px !important;
     height: 20px !important;
     font-size: 20px !important;
     margin-bottom: 0;
+    font-weight: bold;
 }
 
 .spc-case-start label{
@@ -195,15 +205,15 @@ input:not("[type: radio]"){
     display: flex;
     justify-content: end;
     margin-bottom: 30px;
-    padding: 30px;
+    padding: 10px 30px;
 }
 
 .submit-btn{
     width: 150px;
-    height: 70px;
-    line-height: 70px;
+    height: 50px;
+    line-height: 50px;
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
     color: White;
     background-color: blue;
     border: none;
