@@ -93,19 +93,24 @@ const Home = () => {
             .then(res=>{
             //   console.log("res: ", res.data);
               console.log("fourDates: ", fourDates);
-            if(fourDates.length > 0){
+            // if(fourDates.length > 0){
 
-                const updatedRegionsTempPage = res.data.regionsTempPage.map(reg =>{
-                    const updatedWeatherData =  reg.weatherData.map((dayData, dayIndex)=>  (dayIndex===0 || dayIndex===1)? {...dayData, date: fourDates[0]}  : {...dayData, date: fourDates[dayIndex - 1]}  )
+            //     const updatedRegionsTempPage = res.data.regionsTempPage.map(reg =>{
+            //         const updatedWeatherData =  reg.weatherData.map((dayData, dayIndex)=>  (dayIndex===0 || dayIndex===1)? {...dayData, date: fourDates[0]}  : {...dayData, date: fourDates[dayIndex - 1]}  )
 
-                    return{...reg, weatherData: updatedWeatherData}
-                })
+            //         return{...reg, weatherData: updatedWeatherData}
+            //     })
                 
-                setRegions(updatedRegionsTempPage)
-                // setRegions(res.data.regionsTempPage)
-            } else{
-                setRegions(res.data.regionsTempPage)
+            //     setRegions(updatedRegionsTempPage)
+            //     // setRegions(res.data.regionsTempPage)
+            // } else{
+            //     setRegions(res.data.regionsTempPage)
+            // }
+            setRegions(res.data.regionsTempPage)
+            for(let i=0; i<4; i++){
+                // setFourDates([...fourDates, res.data?.regionsTempPage[0]?.weatherData[i+1]?.date])
             }
+            
             setAllGenWeatherPoints(res.data.generalWeatherState)
             setGeneralMaps(res.data.mapsArray)
             setAllSpcWeatherPoints(res.data.spacCasePage?.allSpcWeatherPoints)
@@ -121,7 +126,20 @@ const Home = () => {
           }
       
           getallData()
+    }, [])
+
+    useEffect(() => {
+        if(fourDates.length > 0){
+            const updatedRegionsTempPage = regions.map(reg =>{
+                const updatedWeatherData =  reg.weatherData.map((dayData, dayIndex)=>  (dayIndex===0 || dayIndex===1)? {...dayData, date: fourDates[0]}  : {...dayData, date: fourDates[dayIndex - 1]}  )
+    
+                return{...reg, weatherData: updatedWeatherData}
+            })
+            setRegions(updatedRegionsTempPage)
+
+        }
     }, [fourDates])
+    
 
     console.log("AllGenWeatherPoints: ", allGenWeatherPoints);
     

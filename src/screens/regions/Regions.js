@@ -174,7 +174,7 @@ const Regions = ({setFourDayes}) => {
                                     </h2>
 
                                     <div className='day-section'>
-                                        <h5>اليوم الأول</h5>
+                                        <h5>{fourDates.length>0 ? fourDates[0] : "اليوم الأول"}</h5>
                                         {
                                             ['صباحا', 'مساء'].map((t, periodIndex)=>
                                                 <div key={t} className='day-pn-am'>
@@ -288,7 +288,7 @@ const Regions = ({setFourDayes}) => {
                                     {
                                         ['اليوم الثاني', 'اليوم الثالث', 'اليوم الرابع',].map((day, dayIndex)=>
                                         <div key={dayIndex} className='day-section'>
-                                            <h5>{day}</h5>
+                                            <h5>{fourDates.length>0 ? fourDates[dayIndex] : day}</h5>
                                             <div>
                                                 <div className='d-flex' >
                                                     <div>

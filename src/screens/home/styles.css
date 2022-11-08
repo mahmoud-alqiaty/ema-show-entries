@@ -147,7 +147,7 @@ input:not("[type: radio]"){
 }
 
 .day-section h5{
-    width: 150px;
+    max-width: 250px;
     margin-bottom: 7px;
     border: 1px solid #f7f7f7;
     padding: 3px 5px;
