@@ -229,6 +229,16 @@ const Home = () => {
         'ضباب',
     ]
 
+    const rainWeight = [
+        'خفيف',
+        'متوسط',
+        'غزير',
+        'خفيف : متوسط',
+        'متوسط : غزير',
+        'متوسط ورعدي',
+        'غزير ورعدي',
+    ]
+
 
     const contextValue = {
         allGenWeatherPoints, setAllGenWeatherPoints,
@@ -246,7 +256,7 @@ const Home = () => {
         allSpcWeatherPoints, setAllSpcWeatherPoints,
         spcWarningInputValue, setSpcWarningInputValue,
         allSpcWarningPoints, setAllSpcWarningPoints,
-        regionsNames, phenomenaOptions,
+        regionsNames, phenomenaOptions, rainWeight,
         setStartingDay
     }
 

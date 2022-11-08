@@ -7,7 +7,7 @@ import downArrow from '../../images/down-circle.svg'
 
 
 const Regions = ({setFourDayes}) => {
-    const {regionsNames, regions, setRegions, phenomenaOptions, fourDates} = useContext(HomeContext)
+    const {regionsNames, regions, setRegions, phenomenaOptions, rainWeight, fourDates} = useContext(HomeContext)
 
     const [displayRegions, setDisplayRegions] = useState(false)
 
@@ -66,11 +66,10 @@ const Regions = ({setFourDayes}) => {
 
     }
 
-    const setRegionDes = (value, regionName, dayIndex)=>{
+    const setRegionRainPercentage = (value, regionName, dayIndex)=>{
         const secEditedRegion = regions.map(singleRegion =>{
             if( singleRegion.name === regionName){
-                const dsc = {...singleRegion.weatherData[dayIndex].dsc}
-                singleRegion.weatherData[dayIndex] = {...singleRegion.weatherData[dayIndex], dsc: [...dsc, value]}
+                singleRegion.weatherData[dayIndex] = {...singleRegion.weatherData[dayIndex], rainPercentage: value}
                 return singleRegion
             } else{
                 return singleRegion
@@ -79,6 +78,34 @@ const Regions = ({setFourDayes}) => {
         setRegions(secEditedRegion)
 
     }
+
+    const setRainingWeight = (value, regionName, dayIndex)=>{
+        const secEditedRegion = regions.map(singleRegion =>{
+            if( singleRegion.name === regionName){
+                singleRegion.weatherData[dayIndex] = {...singleRegion.weatherData[dayIndex], rainingWeight: value}
+                return singleRegion
+            } else{
+                return singleRegion
+            }
+        })
+        setRegions(secEditedRegion)
+
+    }
+
+    const setRegionNotes = (value, regionName, dayIndex)=>{
+        const secEditedRegion = regions.map(singleRegion =>{
+            if( singleRegion.name === regionName){
+                singleRegion.weatherData[dayIndex] = {...singleRegion.weatherData[dayIndex], notes: value}
+                return singleRegion
+            } else{
+                return singleRegion
+            }
+        })
+        setRegions(secEditedRegion)
+
+    }
+
+   
 
     // const DesReturn = (regionName, dayIndex)=>{
     //     return(
@@ -205,6 +232,52 @@ const Regions = ({setFourDayes}) => {
                                                             onChange={e=>setRegionwind(e.target.value, regionName, periodIndex)} 
                                                             />
                                                         </div>
+                                                        {
+                                                            regions[regionIndex].weatherData[t === 'صباحا' ? 0 : 1].icon === "ممطر" || regions[regionIndex].weatherData[t === 'صباحا' ? 0 : 1].icon === 'مطر رعدي' ?
+                                                            (
+                                                                <>
+                                                                <div>
+                                                                    <h6>نسبة الامطار</h6>
+                                                                    <input 
+                                                                    type='number'
+                                                                    value={regions[regionIndex].weatherData[t === 'صباحا' ? 0 : 1]?.rainPercentage}  
+                                                                    onChange={e=>setRegionRainPercentage(e.target.value, regionName, periodIndex)} 
+                                                                    />
+                                                                </div>
+
+                                                                <div>
+                                                                    <h6>شدة الأمطار</h6>
+                                                                    <select 
+                                                                    value={regions[regionIndex].weatherData[t === 'صباحا' ? 0 : 1]?.rainingWeight}  
+                                                                    onChange={e=>setRainingWeight(e.target.value, regionName, periodIndex)}
+                                                                    >
+                                                                        <option value=''>-------</option>
+                                                                        
+                                                                        {
+                                                                            rainWeight.map((weight, index)=>
+                                                                            <option key={index} value={weight}>
+                                                                                {weight}
+                                                                            </option> 
+                                                                            )
+                                                                        }
+                                                                    </select>
+                                                                </div>
+                                                                </>
+                                                                
+                                                            ):null
+                                                        }
+                                                        
+                                                        
+                                                    </div>
+
+                                                    <div className='w-100 mt-3'>
+                                                        <h6>ملاحظات</h6>
+                                                        <textarea 
+                                                        rows={4}
+                                                        cols={50}
+                                                        value={regions[regionIndex].weatherData[periodIndex]?.notes}  
+                                                        onChange={e=>setRegionNotes(e.target.value, regionName, periodIndex)} 
+                                                        />
                                                     </div>
                                                     {/* <DesReturn regionName={regionName} dayIndex={periodIndex} /> */}
                                                 </div>
@@ -259,6 +332,19 @@ const Regions = ({setFourDayes}) => {
                                                         value={Math.floor(regions[regionIndex].weatherData[dayIndex + 2].wind/1.852)} 
                                                         />
                                                     </div>
+                                                    {
+                                                            regions[regionIndex].weatherData[dayIndex + 2].icon === "ممطر" || regions[regionIndex].weatherData[dayIndex + 2].icon === 'مطر رعدي' ?
+                                                            (
+                                                                <div>
+                                                                    <h6>نسبة الامطار</h6>
+                                                                    <input 
+                                                                    type='number'
+                                                                    value={regions[regionIndex].weatherData[dayIndex + 2]?.rainPercentage}  
+                                                                    onChange={e=>setRegionRainPercentage(e.target.value, regionName, dayIndex + 2)} 
+                                                                    />
+                                                                </div>
+                                                            ):null
+                                                        }
 
                                                 </div>
                                             </div>
