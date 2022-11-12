@@ -5,6 +5,17 @@ import ReactLoading from 'react-loading';
 import upArrow from '../../images/up-circle.svg'
 import downArrow from '../../images/down-circle.svg'
 
+const windDirections = [
+    {name: 'شمالية', angle: 180},
+    {name: 'شرقية', angle: 270},
+    {name: 'جنوبية', angle: 0},
+    {name: 'غربية', angle: 90},
+    {name: 'شمالية غربية', angle: 135},
+    {name: 'شمالية شرقية', angle: 225},
+    {name: 'جنوبية غربية', angle: 45},
+    {name: 'جنوبية شرقية', angle: 315}, 
+]
+
 
 const Regions = ({setFourDayes}) => {
     const {regionsNames, regions, setRegions, phenomenaOptions, rainWeight, fourDates} = useContext(HomeContext)
@@ -31,6 +42,9 @@ const Regions = ({setFourDayes}) => {
         const secEditedRegion = regions.map(singleRegion =>{
             if( singleRegion.name === regionName){
                 singleRegion.weatherData[dayIndex] = {...singleRegion.weatherData[dayIndex], minTemp: value}
+                if(dayIndex == 1){
+                    singleRegion.weatherData[0] = {...singleRegion.weatherData[0], minTemp: value}
+                }
                 return singleRegion
             } else{
                 return singleRegion
@@ -105,28 +119,99 @@ const Regions = ({setFourDayes}) => {
 
     }
 
-   
+    const setMSWindDirection = (value, regionName, dayIndex)=>{
+        console.log("value: ", value);
+        const secEditedRegion = regions.map(singleRegion =>{
+            if( singleRegion.name === regionName){
+                singleRegion.weatherData[dayIndex].ms = {...singleRegion.weatherData[dayIndex].ms, windDirection: value}
+                return singleRegion
+            } else{
+                return singleRegion
+            }
+        })
+        setRegions(secEditedRegion)
 
-    // const DesReturn = (regionName, dayIndex)=>{
-    //     return(
-    //         <div className='weather-state-points'>
-    //         <h4>العناصر الرئيسية</h4>
-    //         <div>
-    //             <input type='text' onChange={e=>setRegionDayPoint(e.target.value)} />
-    //             <button type='button' onClick={()=>setRegionDes()} className='adding-btn'>اضافة</button>
-    //         </div>
-    //         {
-    //             allRegionDayPoints.length ? (
-    //                 <ul className='all-weather-points'>
-    //                     {
-    //                         allRegionDayPoints.map((point, index)=><li key={index}>{point}</li>)
-    //                     }
-    //                 </ul>
-    //             ):null
-    //         }
-    //     </div>
-    //     )
-    // }
+    }
+
+    const setMSWindSpead = (value, regionName, dayIndex, windSpeadIndex)=>{
+        const secEditedRegion = regions.map(singleRegion =>{
+            if( singleRegion.name === regionName){
+                singleRegion.weatherData[dayIndex].ms = 
+                windSpeadIndex == 0 ?
+                {...singleRegion.weatherData[dayIndex].ms,  windStart: value} :
+                {...singleRegion.weatherData[dayIndex].ms,  windEnd: value} 
+                return singleRegion
+            } else{
+                return singleRegion
+            }
+        })
+        setRegions(secEditedRegion)
+
+    }
+
+    const setMSWave = (value, regionName, dayIndex, waveIndex)=>{
+        const secEditedRegion = regions.map(singleRegion =>{
+            if( singleRegion.name === regionName){
+                singleRegion.weatherData[dayIndex].ms = 
+                waveIndex == 0 ?
+                {...singleRegion.weatherData[dayIndex].ms,  waveStart: value} :
+                {...singleRegion.weatherData[dayIndex].ms,  waveEnd: value} 
+                return singleRegion
+            } else{
+                return singleRegion
+            }
+        })
+        setRegions(secEditedRegion)
+
+    }
+
+
+    const setRSWindDirection = (value, regionName, dayIndex)=>{
+        console.log("value: ", value);
+        const secEditedRegion = regions.map(singleRegion =>{
+            if( singleRegion.name === regionName){
+                singleRegion.weatherData[dayIndex].rs = {...singleRegion.weatherData[dayIndex].rs, windDirection: value}
+                return singleRegion
+            } else{
+                return singleRegion
+            }
+        })
+        setRegions(secEditedRegion)
+
+    }
+
+    const setRSWindSpead = (value, regionName, dayIndex, windSpeadIndex)=>{
+        const secEditedRegion = regions.map(singleRegion =>{
+            if( singleRegion.name === regionName){
+                singleRegion.weatherData[dayIndex].rs = 
+                windSpeadIndex == 0 ?
+                {...singleRegion.weatherData[dayIndex].rs,  windStart: value} :
+                {...singleRegion.weatherData[dayIndex].rs,  windEnd: value} 
+                return singleRegion
+            } else{
+                return singleRegion
+            }
+        })
+        setRegions(secEditedRegion)
+
+    }
+
+    const setRSWave = (value, regionName, dayIndex, waveIndex)=>{
+        const secEditedRegion = regions.map(singleRegion =>{
+            if( singleRegion.name === regionName){
+                singleRegion.weatherData[dayIndex].rs = 
+                waveIndex == 0 ?
+                {...singleRegion.weatherData[dayIndex].rs,  waveStart: value} :
+                {...singleRegion.weatherData[dayIndex].rs,  waveEnd: value} 
+                return singleRegion
+            } else{
+                return singleRegion
+            }
+        })
+        setRegions(secEditedRegion)
+
+    }
+   
 
     console.log("regions: ", regions);
 
@@ -288,7 +373,7 @@ const Regions = ({setFourDayes}) => {
                                     {
                                         ['اليوم الثاني', 'اليوم الثالث', 'اليوم الرابع',].map((day, dayIndex)=>
                                         <div key={dayIndex} className='day-section'>
-                                            <h5>{fourDates.length>0 ? fourDates[dayIndex] : day}</h5>
+                                            <h5>{fourDates.length>0 ? fourDates[dayIndex + 1] : day}</h5>
                                             <div>
                                                 <div className='d-flex' >
                                                     <div>
@@ -360,7 +445,143 @@ const Regions = ({setFourDayes}) => {
         }
 
         
-               
+        <div>
+            <h2>حالة البحرين</h2>
+            <div className='region ms'>
+                
+
+                {
+                    ['اليوم الأول', 'اليوم الثاني', 'اليوم الثالث', 'اليوم الرابع',].map((day, dayIndex)=>
+                    <div key={dayIndex} className='day-section'>
+                        <h5>{fourDates.length>0 ? fourDates[dayIndex] : day}</h5>
+                        <div>
+                            <h3>البحر المتوسط</h3>
+                            <div className='d-flex' >
+                                <div>
+                                    <h6>اتجاه الرياح</h6>
+                                    <select 
+                                    // value={regions[1].weatherData[dayIndex]?.ms?.windDirection} 
+                                    onChange={e=>setMSWindDirection(e.target.value, 'السواحل الشمالية الغربية', dayIndex == 0? dayIndex : dayIndex + 1)}
+                                    >
+                                        <option value=''>-------</option>
+                                        {
+                                            windDirections.map((dir, index)=>
+                                                <option key={index} value={dir.angle}>
+                                                    {dir.name}
+                                                </option> 
+                                            )
+                                        }
+                                    </select>
+                                </div>
+                                <div>
+                                    <h4>سرعة الرياح</h4>
+                                    <div>
+                                        <h6>من</h6>
+                                        <input 
+                                        type='number' 
+                                        onChange={e=>setMSWindSpead(e.target.value, 'السواحل الشمالية الغربية', dayIndex == 0? dayIndex : dayIndex + 1, 0)} 
+                                        // value={regions[regionIndex].weatherData[dayIndex + 2].maxTemp} 
+                                        />
+                                    </div>
+                                    <div>
+                                        <h6>إلى</h6>
+                                        <input 
+                                        type='number' 
+                                        onChange={e=>setMSWindSpead(e.target.value, 'السواحل الشمالية الغربية', dayIndex == 0? dayIndex : dayIndex + 1, 1)}
+                                        // value={regions[regionIndex].weatherData[dayIndex + 2].minTemp}  
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4>ارتفاع الموج</h4>
+                                    <div>
+                                        <h6>من</h6>
+                                        <input 
+                                        type='number' 
+                                        step={0.25}
+                                        onChange={e=>setMSWave(e.target.value, 'السواحل الشمالية الغربية', dayIndex == 0? dayIndex : dayIndex + 1, 0)} 
+                                        // value={regions[regionIndex].weatherData[dayIndex + 2].maxTemp} 
+                                        />
+                                    </div>
+                                    <div>
+                                        <h6>إلى</h6>
+                                        <input 
+                                        type='number' 
+                                        onChange={e=>setMSWave(e.target.value, 'السواحل الشمالية الغربية', dayIndex == 0? dayIndex : dayIndex + 1, 1)}
+                                        // value={regions[regionIndex].weatherData[dayIndex + 2].minTemp}  
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <h3>البحر الأحمر</h3>
+                            <div className='d-flex' >
+                                <div>
+                                    <h6>اتجاه الرياح</h6>
+                                    <select 
+                                    // value={regions[1].weatherData[dayIndex]?.ms?.windDirection} 
+                                    onChange={e=>setRSWindDirection(e.target.value, 'السواحل الشمالية الشرقية', dayIndex == 0? dayIndex : dayIndex + 1)}
+                                    >
+                                        <option value=''>-------</option>
+                                        {
+                                            windDirections.map((dir, index)=>
+                                                <option key={index} value={dir.angle}>
+                                                    {dir.name}
+                                                </option> 
+                                            )
+                                        }
+                                    </select>
+                                </div>
+                                <div>
+                                    <h4>سرعة الرياح</h4>
+                                    <div>
+                                        <h6>من</h6>
+                                        <input 
+                                        type='number' 
+                                        onChange={e=>setRSWindSpead(e.target.value, 'السواحل الشمالية الشرقية', dayIndex == 0? dayIndex : dayIndex + 1, 0)} 
+                                        // value={regions[regionIndex].weatherData[dayIndex + 2].maxTemp} 
+                                        />
+                                    </div>
+                                    <div>
+                                        <h6>إلى</h6>
+                                        <input 
+                                        type='number' 
+                                        onChange={e=>setRSWindSpead(e.target.value, 'السواحل الشمالية الشرقية', dayIndex == 0? dayIndex : dayIndex + 1, 1)}
+                                        // value={regions[regionIndex].weatherData[dayIndex + 2].minTemp}  
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4>ارتفاع الموج</h4>
+                                    <div>
+                                        <h6>من</h6>
+                                        <input 
+                                        type='number' 
+                                        step={0.25}
+                                        onChange={e=>setRSWave(e.target.value, 'السواحل الشمالية الشرقية', dayIndex == 0? dayIndex : dayIndex + 1, 0)} 
+                                        // value={regions[regionIndex].weatherData[dayIndex + 2].maxTemp} 
+                                        />
+                                    </div>
+                                    <div>
+                                        <h6>إلى</h6>
+                                        <input 
+                                        type='number' 
+                                        onChange={e=>setRSWave(e.target.value, 'السواحل الشمالية الشرقية', dayIndex == 0? dayIndex : dayIndex + 1, 1)}
+                                        // value={regions[regionIndex].weatherData[dayIndex + 2].minTemp}  
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    )
+                }
+            </div>
+
+        </div>    
 
     </div>
   )
