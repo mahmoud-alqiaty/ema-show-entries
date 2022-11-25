@@ -11,9 +11,9 @@ export const HomeContext = createContext()
 
 const Home = () => {
     const regionsNames = [
-        'القاهرة والوجه البحري',
-        'السواحل الشمالية الغربية',
-        'السواحل الشمالية الشرقية',
+        'القاهرة وجنوب الوجه البحري ومدن القناة',
+        'السواحل الشمالية الغر بية وشمال الوجه البحري',
+        'السواحل الشمالية الشرقية ووسط سيناء',
         'جنوب سيناء وسلاسل جبال البحر الأحمر',
         'شمال الصعيد',
         'جنوب الصعيد',
@@ -106,7 +106,18 @@ const Home = () => {
             // } else{
             //     setRegions(res.data.regionsTempPage)
             // }
-            setRegions(res.data.regionsTempPage)
+            const regionsWithEditedNames = res?.data?.regionsTempPage.map(singleRegion =>{
+                if( singleRegion.name == 'القاهرة والوجه البحري') {
+                    singleRegion.name = 'القاهرة وجنوب الوجه البحري ومدن القناة'
+                }
+                if(singleRegion.name == 'السواحل الشمالية الغربية'){
+                    singleRegion.name = 'السواحل الشمالية الغر بية وشمال الوجه البحري'
+                }
+                return singleRegion
+            } 
+            )
+
+            setRegions(regionsWithEditedNames)
             for(let i=0; i<4; i++){
                 // setFourDates([...fourDates, res.data?.regionsTempPage[0]?.weatherData[i+1]?.date])
             }
@@ -239,14 +250,32 @@ const Home = () => {
     const phenomenaOptions = [
         'غائم',
         'غائم جزئي',
+        'أمطار',
+        'رعدي',
+        'مطر رعدي',
+        'رمال مثارة',
+        'أتربة عالقة',
+        'شبورة',
+        'ضباب',
+        'شبورة صباحاً + غائم جزئي',
+        'نشاط رياح + غائم جزئي',
+        'نشاط رياح + أمطار',
+        'شبورة صباحاً + مشمس',
+        'نشاط رياح + مشمس',
+    ]
+
+    const nightPhenomenaOptions = [
+        'غائم',
+        'غائم جزئي',
         'ممطر',
         'رعدي',
         'مطر رعدي',
         'رمال مثارة',
         'شبورة',
         'ضباب',
-        'شبورة صباحاً + غائم جزئي',
-        'شبورة صباحاً + مشمس',
+        'نشاط رياح',
+        'نشاط رياح + أمطار',
+        
     ]
 
     const rainWeight = [
@@ -255,6 +284,7 @@ const Home = () => {
         'غزير',
         'خفيف : متوسط',
         'متوسط : غزير',
+        'خفيف ورعدي',
         'متوسط ورعدي',
         'غزير ورعدي',
     ]

@@ -16,9 +16,20 @@ const GeneralState = ({uploadImage, removePreviewImg}) => {
       setGenWeatherInputValue("")
     }
   }
+  //edit general weather state
+  // const editingWeatherPoint = () =>{
+  //   if(genWeatherInputValue.trim() !== ""){
+  //     // setAllGenWeatherPoints([...allGenWeatherPoints, genWeatherInputValue])
+  //     genWeatherInputValue[index] = 
+  //     setGenWeatherInputValue("")
+  //   }
+  // }
 
   const removeWeatherPoint = (index) =>{
     setAllGenWeatherPoints(allGenWeatherPoints.filter((p, pIndex)=> pIndex !== index ))
+  }
+  const editWeatherPoint = (index) =>{
+    setGenWeatherInputValue(allGenWeatherPoints[index])
   }
 
 
@@ -31,6 +42,7 @@ const GeneralState = ({uploadImage, removePreviewImg}) => {
         <div>
             <input type='text' value={genWeatherInputValue} onChange={e=>setGenWeatherInputValue(e.target.value)} />
             <button type='button' onClick={addWeatherPoint} className='adding-btn'>اضافة</button>
+            {/* <button type='button' onClick={editingWeatherPoint} className='adding-btn'>تعديل</button> */}
         </div>
         {
             allGenWeatherPoints.length ? (
@@ -44,6 +56,9 @@ const GeneralState = ({uploadImage, removePreviewImg}) => {
                           <span onClick={()=>removeWeatherPoint(index)}>
                             &times;
                           </span>
+                          <span onClick={()=>editWeatherPoint(index)}>
+                            Edit
+                          </span>
                         </li>
                         )
                     }
@@ -56,7 +71,7 @@ const GeneralState = ({uploadImage, removePreviewImg}) => {
 
 
       {/* ============maps-entries============== */}
-      <div className='section maps-entries'>
+      <div className='section maps-entries d-none'>
           <h1 className='section-header'>
               الخرائط
           </h1>
