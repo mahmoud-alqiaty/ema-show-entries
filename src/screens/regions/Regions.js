@@ -462,8 +462,8 @@ const Regions = ({setFourDayes}) => {
                                 <div>
                                     <h6>اتجاه الرياح</h6>
                                     <select 
-                                    value={regions[3]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.rs?.windDirection} 
-                                    onChange={e=>setMSWindDirection(e.target.value, 'السواحل الشمالية الغربية', dayIndex == 0? dayIndex : dayIndex + 1)}
+                                    // value={regions[3]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.rs?.windDirection} 
+                                    onChange={e=>setMSWindDirection(e.target.value, 'السواحل الشمالية الغر بية وشمال الوجه البحري', dayIndex == 0? dayIndex : dayIndex + 1)}
                                     >
                                         <option value=''>-------</option>
                                         {
@@ -481,16 +481,16 @@ const Regions = ({setFourDayes}) => {
                                         <h6>من</h6>
                                         <input 
                                         type='number' 
-                                        onChange={e=>setMSWindSpead(e.target.value, 'السواحل الشمالية الغربية', dayIndex == 0? dayIndex : dayIndex + 1, 0)} 
-                                        value={regions[1]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.ms?.windStart} 
+                                        onChange={e=>setMSWindSpead(e.target.value, 'السواحل الشمالية الغر بية وشمال الوجه البحري', dayIndex == 0? dayIndex : dayIndex + 1, 0)} 
+                                        // value={regions[1]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.ms?.windStart} 
                                         />
                                     </div>
                                     <div>
                                         <h6>إلى</h6>
                                         <input 
                                         type='number' 
-                                        onChange={e=>setMSWindSpead(e.target.value, 'السواحل الشمالية الغربية', dayIndex == 0? dayIndex : dayIndex + 1, 1)}
-                                        value={regions[1]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.ms?.windEnd}  
+                                        onChange={e=>setMSWindSpead(e.target.value, 'السواحل الشمالية الغر بية وشمال الوجه البحري', dayIndex == 0? dayIndex : dayIndex + 1, 1)}
+                                        // value={regions[1]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.ms?.windEnd}  
                                         />
                                     </div>
                                 </div>
@@ -501,16 +501,16 @@ const Regions = ({setFourDayes}) => {
                                         <input 
                                         type='number' 
                                         step={0.25}
-                                        onChange={e=>setMSWave(e.target.value, 'السواحل الشمالية الغربية', dayIndex == 0? dayIndex : dayIndex + 1, 0)} 
-                                        value={regions[1]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.ms?.waveStart} 
+                                        onChange={e=>setMSWave(e.target.value, 'السواحل الشمالية الغر بية وشمال الوجه البحري', dayIndex == 0? dayIndex : dayIndex + 1, 0)} 
+                                        // value={regions[1]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.ms?.waveStart} 
                                         />
                                     </div>
                                     <div>
                                         <h6>إلى</h6>
                                         <input 
                                         type='number' 
-                                        onChange={e=>setMSWave(e.target.value, 'السواحل الشمالية الغربية', dayIndex == 0? dayIndex : dayIndex + 1, 1)}
-                                        value={regions[1]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.ms?.waveEnd}   
+                                        onChange={e=>setMSWave(e.target.value, 'السواحل الشمالية الغر بية وشمال الوجه البحري', dayIndex == 0? dayIndex : dayIndex + 1, 1)}
+                                        // value={regions[1]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.ms?.waveEnd}   
                                         />
                                     </div>
                                 </div>
@@ -523,8 +523,8 @@ const Regions = ({setFourDayes}) => {
                                 <div>
                                     <h6>اتجاه الرياح</h6>
                                     <select 
-                                    value={regions[3]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.rs?.windDirection}  
-                                    onChange={e=>setRSWindDirection(e.target.value, 'السواحل الشمالية الشرقية', dayIndex == 0? dayIndex : dayIndex + 1)}
+                                    // value={regions[3]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.rs?.windDirection}  
+                                    onChange={e=>setRSWindDirection(e.target.value, 'السواحل الشمالية الشرقية ووسط سيناء', dayIndex == 0? dayIndex : dayIndex + 1)}
                                     >
                                         <option value=''>-------</option>
                                         {
@@ -542,16 +542,16 @@ const Regions = ({setFourDayes}) => {
                                         <h6>من</h6>
                                         <input 
                                         type='number' 
-                                        onChange={e=>setRSWindSpead(e.target.value, 'السواحل الشمالية الشرقية', dayIndex == 0? dayIndex : dayIndex + 1, 0)} 
-                                        value={regions[3]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.rs?.windStart}  
+                                        onChange={e=>setRSWindSpead(e.target.value, 'السواحل الشمالية الشرقية ووسط سيناء', dayIndex == 0? dayIndex : dayIndex + 1, 0)} 
+                                        // value={regions[3]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.rs?.windStart}  
                                         />
                                     </div>
                                     <div>
                                         <h6>إلى</h6>
                                         <input 
                                         type='number' 
-                                        onChange={e=>setRSWindSpead(e.target.value, 'السواحل الشمالية الشرقية', dayIndex == 0? dayIndex : dayIndex + 1, 1)}
-                                        value={regions[3]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.rs?.windEnd}  
+                                        onChange={e=>setRSWindSpead(e.target.value, 'السواحل الشمالية الشرقية ووسط سيناء', dayIndex == 0? dayIndex : dayIndex + 1, 1)}
+                                        // value={regions[3]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.rs?.windEnd}  
                                         />
                                     </div>
                                 </div>
@@ -562,16 +562,16 @@ const Regions = ({setFourDayes}) => {
                                         <input 
                                         type='number' 
                                         step={0.25}
-                                        onChange={e=>setRSWave(e.target.value, 'السواحل الشمالية الشرقية', dayIndex == 0? dayIndex : dayIndex + 1, 0)} 
-                                        value={regions[3]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.rs?.waveStart} 
+                                        onChange={e=>setRSWave(e.target.value, 'السواحل الشمالية الشرقية ووسط سيناء', dayIndex == 0? dayIndex : dayIndex + 1, 0)} 
+                                        // value={regions[3]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.rs?.waveStart} 
                                         />
                                     </div>
                                     <div>
                                         <h6>إلى</h6>
                                         <input 
                                         type='number' 
-                                        onChange={e=>setRSWave(e.target.value, 'السواحل الشمالية الشرقية', dayIndex == 0? dayIndex : dayIndex + 1, 1)}
-                                        value={regions[3]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.rs?.waveEnd}  
+                                        onChange={e=>setRSWave(e.target.value, 'السواحل الشمالية الشرقية ووسط سيناء', dayIndex == 0? dayIndex : dayIndex + 1, 1)}
+                                        // value={regions[3]?.weatherData[dayIndex == 0? 0 : dayIndex + 1]?.rs?.waveEnd}  
                                         />
                                     </div>
                                 </div>

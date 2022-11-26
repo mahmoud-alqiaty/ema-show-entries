@@ -113,6 +113,9 @@ const Home = () => {
                 if(singleRegion.name == 'السواحل الشمالية الغربية'){
                     singleRegion.name = 'السواحل الشمالية الغر بية وشمال الوجه البحري'
                 }
+                if(singleRegion.name == 'السواحل الشمالية الشرقية'){
+                    singleRegion.name = 'السواحل الشمالية الشرقية ووسط سيناء'
+                }
                 return singleRegion
             } 
             )
