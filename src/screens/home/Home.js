@@ -89,7 +89,7 @@ const Home = () => {
     //get data from db
     useEffect(() => {
         const getallData = async () =>{
-            axios.get("https://ema-show-backend.herokuapp.com/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
+            axios.get("https://ema-show-backend.onrender.com/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
             .then(res=>{
             //   console.log("res: ", res.data);
               console.log("fourDates: ", fourDates);
@@ -317,7 +317,6 @@ const Home = () => {
     const handleSubmit = (e)=>{
         e.preventDefault();
         setSubmitting(true) 
-        
         let data = {
             generalWeatherState: allGenWeatherPoints,
             mapsArray: generalMaps,
@@ -333,7 +332,8 @@ const Home = () => {
             _id: '635259f5f3b78e569fbbeb62',
         }
 
-        axios.put('https://ema-show-backend.herokuapp.com/mapsAndSats/maps/635259f5f3b78e569fbbeb62', data)
+      
+        axios.put('https://ema-show-backend.onrender.com/mapsAndSats/maps/635259f5f3b78e569fbbeb62', data)
         .then(res=>{
             console.log("res: ", res.data);
             setSubmitting(false) 
