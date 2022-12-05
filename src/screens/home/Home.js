@@ -89,7 +89,8 @@ const Home = () => {
     //get data from db
     useEffect(() => {
         const getallData = async () =>{
-            axios.get("https://ema-show-backend.onrender.com/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
+            // axios.get("https://ema-show-backend.onrender.com/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
+            axios.get("https://web-production-474c.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
             .then(res=>{
             //   console.log("res: ", res.data);
               console.log("fourDates: ", fourDates);
@@ -332,8 +333,10 @@ const Home = () => {
             _id: '635259f5f3b78e569fbbeb62',
         }
 
+        
+        // https://ema-show-backend.onrender.com/
       
-        axios.put('https://ema-show-backend.onrender.com/mapsAndSats/maps/635259f5f3b78e569fbbeb62', data)
+        axios.put('https://web-production-474c.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62', data)
         .then(res=>{
             console.log("res: ", res.data);
             setSubmitting(false) 
