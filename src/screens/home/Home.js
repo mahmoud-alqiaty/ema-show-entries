@@ -85,7 +85,7 @@ const Home = () => {
     
     // console.log("regions: ", regions);
 
-
+    
     //get data from db
     useEffect(() => {
         const getallData = async () =>{
@@ -137,6 +137,54 @@ const Home = () => {
             })
             .catch(err=>{
               console.log(err.message);
+              axios.get("https://web-production-9b2e.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
+              .then(res=>{
+                //   console.log("res: ", res.data);
+                  console.log("fourDates: ", fourDates);
+                // if(fourDates.length > 0){
+    
+                //     const updatedRegionsTempPage = res.data.regionsTempPage.map(reg =>{
+                //         const updatedWeatherData =  reg.weatherData.map((dayData, dayIndex)=>  (dayIndex===0 || dayIndex===1)? {...dayData, date: fourDates[0]}  : {...dayData, date: fourDates[dayIndex - 1]}  )
+    
+                //         return{...reg, weatherData: updatedWeatherData}
+                //     })
+                    
+                //     setRegions(updatedRegionsTempPage)
+                //     // setRegions(res.data.regionsTempPage)
+                // } else{
+                //     setRegions(res.data.regionsTempPage)
+                // }
+                const regionsWithEditedNames = res?.data?.regionsTempPage.map(singleRegion =>{
+                    if( singleRegion.name == 'القاهرة والوجه البحري') {
+                        singleRegion.name = 'القاهرة وجنوب الوجه البحري ومدن القناة'
+                    }
+                    if(singleRegion.name == 'السواحل الشمالية الغربية'){
+                        singleRegion.name = 'السواحل الشمالية الغر بية وشمال الوجه البحري'
+                    }
+                    if(singleRegion.name == 'السواحل الشمالية الشرقية'){
+                        singleRegion.name = 'السواحل الشمالية الشرقية ووسط سيناء'
+                    }
+                    return singleRegion
+                } 
+                )
+    
+                setRegions(regionsWithEditedNames)
+                for(let i=0; i<4; i++){
+                    // setFourDates([...fourDates, res.data?.regionsTempPage[0]?.weatherData[i+1]?.date])
+                }
+                
+                setAllGenWeatherPoints(res.data.generalWeatherState)
+                setGeneralMaps(res.data.mapsArray)
+                setAllSpcWeatherPoints(res.data.spacCasePage?.allSpcWeatherPoints)
+                setSpcMaps(res.data.spacCasePage?.spcMaps)
+                setAllSpcWarningPoints(res.data.spacCasePage?.allSpcWarningPoints)
+                setMainTitle(res.data.spacCasePage?.mainTitle)
+                setSubTitle(res.data.spacCasePage?.subTitle)
+                setStartingDay(res.data.spacCasePage?.StartingDay)
+                })
+                .catch(err=>{
+                    console.log(err.message);
+                })
             })
           }
       
@@ -344,8 +392,17 @@ const Home = () => {
         })
         .catch(err=>{
             console.log(err);
-            setSubmitting(false) 
-            swal("فشل الإرسال", err.message, "success");
+            axios.put('https://web-production-474c.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62', data)
+            .then(res=>{
+                console.log("res: ", res.data);
+                setSubmitting(false) 
+                swal("تم الإرسال", "", "success");
+            })
+            .catch(err=>{
+                setSubmitting(false) 
+                swal("فشل الإرسال", err.message, "success");
+
+            })
         })
 
         console.log("submited-data: ", data);
