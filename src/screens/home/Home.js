@@ -392,7 +392,7 @@ const Home = () => {
         })
         .catch(err=>{
             console.log(err);
-            axios.put('https://web-production-474c.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62', data)
+            axios.put('https://web-production-9b2e.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62', data)
             .then(res=>{
                 console.log("res: ", res.data);
                 setSubmitting(false) 
