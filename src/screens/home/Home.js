@@ -89,10 +89,9 @@ const Home = () => {
     //get data from db
     useEffect(() => {
         const getallData = async () =>{
-            // axios.get("https://ema-show-backend.onrender.com/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
             axios.get("https://web-production-474c.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
             .then(res=>{
-            //   console.log("res: ", res.data);
+              console.log("res from API1: ", res.data);
               console.log("fourDates: ", fourDates);
             // if(fourDates.length > 0){
 
@@ -136,10 +135,11 @@ const Home = () => {
             setStartingDay(res.data.spacCasePage?.StartingDay)
             })
             .catch(err=>{
-              console.log(err.message);
+                console.log("error from API1: ", err);
+              console.log("error.message from API1: ", err.message);
               axios.get("https://web-production-9b2e.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
               .then(res=>{
-                //   console.log("res: ", res.data);
+                  console.log("res from API2: ", res.data);
                   console.log("fourDates: ", fourDates);
                 // if(fourDates.length > 0){
     
@@ -183,7 +183,8 @@ const Home = () => {
                 setStartingDay(res.data.spacCasePage?.StartingDay)
                 })
                 .catch(err=>{
-                    console.log(err.message);
+                    console.log("error from API2: ", err);
+                    console.log("error.message from API2: ", err.message);
                 })
             })
           }
