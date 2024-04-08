@@ -91,7 +91,7 @@ const Home = () => {
         const getallData = async () =>{
              const headers = {
                       Accept: 'application/json',
-                      'Access-Control-Allow-Origin': '*',
+                      'Access-Control-Allow-Origin': 'https://ema-entries-new.on.fleek.co/',
                        }
             // axios.get("https://web-production-9b2e.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
             axios.get("http://212.103.189.111:8090/getdata", {headers})
@@ -390,8 +390,12 @@ const Home = () => {
         // https://ema-show-backend.onrender.com/
       
         // axios.put('https://web-production-474c.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62', data)
+         const headers = {
+                      Accept: 'application/json',
+                      'Access-Control-Allow-Origin': 'https://ema-entries-new.on.fleek.co/',
+                       }
 
-        axios.put('http://212.103.189.111:8090/update', data)
+        axios.put('http://212.103.189.111:8090/update', data, {headers})
         .then(res=>{
             console.log("res: ", res.data);
             setSubmitting(false) 
