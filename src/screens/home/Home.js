@@ -89,8 +89,8 @@ const Home = () => {
     //get data from db
     useEffect(() => {
         const getallData = async () =>{
-            // axios.get("https://web-production-9b2e.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
-            axios.get("http://212.103.189.111:8090/getdata")
+            axios.get("https://web-production-9b2e.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
+            // axios.get("http://212.103.189.111:8090/getdata")
             .then(res=>{
               console.log("res from API1: ", res.data);
               console.log("fourDates: ", fourDates);
