@@ -89,14 +89,20 @@ const Home = () => {
     //get data from db
     useEffect(() => {
         const getallData = async () =>{
-             const headers = {
-                      Accept: 'application/json',
-                      'Access-Control-Allow-Origin': 'https://ema-entries-new.on.fleek.co/',
-                       }
-            // axios.get("https://web-production-9b2e.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
-            axios.get("http://212.103.189.111:8090/getdata", {headers})
+            const headers = {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            }
+            axios.get("https://212.103.189.111:8090/getdata", {
+                headers,
+                auth: {
+                  username: "abdou",
+                  password: "abdou"
+                }
+              })
             .then(res=>{
-              console.log("res from API1: ", res.data);
+              console.log("res from API: ", res.data);
               console.log("fourDates: ", fourDates);
             // if(fourDates.length > 0){
 
@@ -141,56 +147,7 @@ const Home = () => {
             })
             .catch(err=>{
                 console.log("error from API1: ", err);
-              console.log("error.message from API1: ", err.message);
-            //   axios.get("https://web-production-9b2e.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62")
-            //   .then(res=>{
-            //       console.log("res from API2: ", res.data);
-            //       console.log("fourDates: ", fourDates);
-            //     // if(fourDates.length > 0){
-    
-            //     //     const updatedRegionsTempPage = res.data.regionsTempPage.map(reg =>{
-            //     //         const updatedWeatherData =  reg.weatherData.map((dayData, dayIndex)=>  (dayIndex===0 || dayIndex===1)? {...dayData, date: fourDates[0]}  : {...dayData, date: fourDates[dayIndex - 1]}  )
-    
-            //     //         return{...reg, weatherData: updatedWeatherData}
-            //     //     })
-                    
-            //     //     setRegions(updatedRegionsTempPage)
-            //     //     // setRegions(res.data.regionsTempPage)
-            //     // } else{
-            //     //     setRegions(res.data.regionsTempPage)
-            //     // }
-            //     const regionsWithEditedNames = res?.data?.regionsTempPage.map(singleRegion =>{
-            //         if( singleRegion.name == 'القاهرة والوجه البحري') {
-            //             singleRegion.name = 'القاهرة وجنوب الوجه البحري ومدن القناة'
-            //         }
-            //         if(singleRegion.name == 'السواحل الشمالية الغربية'){
-            //             singleRegion.name = 'السواحل الشمالية الغر بية وشمال الوجه البحري'
-            //         }
-            //         if(singleRegion.name == 'السواحل الشمالية الشرقية'){
-            //             singleRegion.name = 'السواحل الشمالية الشرقية ووسط سيناء'
-            //         }
-            //         return singleRegion
-            //     } 
-            //     )
-    
-            //     setRegions(regionsWithEditedNames)
-            //     for(let i=0; i<4; i++){
-            //         // setFourDates([...fourDates, res.data?.regionsTempPage[0]?.weatherData[i+1]?.date])
-            //     }
-                
-            //     setAllGenWeatherPoints(res.data.generalWeatherState)
-            //     setGeneralMaps(res.data.mapsArray)
-            //     setAllSpcWeatherPoints(res.data.spacCasePage?.allSpcWeatherPoints)
-            //     setSpcMaps(res.data.spacCasePage?.spcMaps)
-            //     setAllSpcWarningPoints(res.data.spacCasePage?.allSpcWarningPoints)
-            //     setMainTitle(res.data.spacCasePage?.mainTitle)
-            //     setSubTitle(res.data.spacCasePage?.subTitle)
-            //     setStartingDay(res.data.spacCasePage?.StartingDay)
-            //     })
-            //     .catch(err=>{
-            //         console.log("error from API2: ", err);
-            //         console.log("error.message from API2: ", err.message);
-            //     })
+              
             })
           }
       
@@ -199,7 +156,7 @@ const Home = () => {
 
     useEffect(() => {
         if(fourDates.length > 0){
-            const updatedRegionsTempPage = regions.map(reg =>{
+            const updatedRegionsTempPage = regions.length>0 && regions.map(reg =>{
                 const updatedWeatherData =  reg.weatherData.map((dayData, dayIndex)=>  (dayIndex===0 || dayIndex===1)? {...dayData, date: fourDates[0]}  : {...dayData, date: fourDates[dayIndex - 1]}  )
     
                 return{...reg, weatherData: updatedWeatherData}
@@ -241,6 +198,7 @@ const Home = () => {
     })
     .catch(err=>{
         console.log(err);
+        swal("حاول مرة اخرى", "", "error");
         if(GenOrSpc === "general"){
             setUploadGenImg(false)
             setGeneralInputValue("")
@@ -386,16 +344,18 @@ const Home = () => {
             },
         }
 
-        
-        // https://ema-show-backend.onrender.com/
-      
-        // axios.put('https://web-production-474c.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62', data)
-         const headers = {
-                      Accept: 'application/json',
-                      'Access-Control-Allow-Origin': 'https://ema-entries-new.on.fleek.co/',
-                       }
+        const headers = {
+            Accept: 'application/json',
+            'Access-Control-Allow-Origin': '*',
+        }
 
-        axios.put('http://212.103.189.111:8090/update', data, {headers})
+        axios.put('https://212.103.189.111:8090/update', data, {
+            headers,
+            auth: {
+              username: "abdou",
+              password: "abdou"
+            }
+          })
         .then(res=>{
             console.log("res: ", res.data);
             setSubmitting(false) 
@@ -403,17 +363,8 @@ const Home = () => {
         })
         .catch(err=>{
             console.log(err);
-            // axios.put('https://web-production-9b2e.up.railway.app/mapsAndSats/maps/635259f5f3b78e569fbbeb62', data)
-            // .then(res=>{
-            //     console.log("res: ", res.data);
-            //     setSubmitting(false) 
-            //     swal("تم الإرسال", "", "success");
-            // })
-            // .catch(err=>{
-            //     setSubmitting(false) 
-            //     swal("فشل الإرسال", err.message, "success");
-
-            // })
+            setSubmitting(false) 
+            swal("فشل الإرسال", err.message, "error");
         })
 
         console.log("submited-data: ", data);
