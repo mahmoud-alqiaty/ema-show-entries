@@ -381,7 +381,7 @@ const Regions = ({setFourDayes}) => {
                                                     <div>
                                                         <h6>الظاهرة</h6>
                                                         <select 
-                                                        value={regions[regionIndex].weatherData[dayIndex + 2].icon} 
+                                                        value={regions.length>0 && regions[regionIndex].weatherData[dayIndex + 2].icon} 
                                                         onChange={e=>setRegionPhenomena(e.target.value, regionName, dayIndex + 2)}
                                                         >
                                                             <option value=''>-------</option>

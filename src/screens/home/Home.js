@@ -104,6 +104,7 @@ const Home = () => {
             .then(res=>{
               console.log("res from API: ", res.data);
               console.log("fourDates: ", fourDates);
+              swal("تم استقبال البيانات بنجاح", "", "success");
             // if(fourDates.length > 0){
 
             //     const updatedRegionsTempPage = res.data.regionsTempPage.map(reg =>{
@@ -147,7 +148,7 @@ const Home = () => {
             })
             .catch(err=>{
                 console.log("error from API1: ", err);
-              
+                swal("فشل استقبال البيانات", "", "error");
             })
           }
       
