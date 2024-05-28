@@ -91,7 +91,7 @@ const Home = () => {
         const getallData = async () =>{
             const headers = {
                 Accept: 'application/json',
-                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/json',
             }
             axios.get("https://212.103.189.111:8090/getdata", {
                 headers,
@@ -346,7 +346,6 @@ const Home = () => {
 
         const headers = {
             Accept: 'application/json',
-            'Access-Control-Allow-Origin': '*',
         }
 
         axios.put('https://212.103.189.111:8090/update', data, {
