@@ -1,0 +1,75 @@
+<html>
+  <head></head>
+  <body>
+    <script src="js/jquery-3.6.4.min.js"></script>
+    <div crossorigin="anonymous">
+    <script>
+
+// Example API endpoint
+const apiUrl = 'https://212.103.189.111:8090/getdata';
+
+// Your username and password
+const username = 'abdou';
+const password = 'abdou';
+
+// Function to make the API call
+function fetchData() {
+  // Create a new XMLHttpRequest object
+  const xhr = new XMLHttpRequest();
+
+  // Open the HTTP request with authentication
+  xhr.open('GET', apiUrl, true);
+  xhr.setRequestHeader('Authorization', 'Basic ' + btoa(username + ':' + password));
+
+  // Handle the response
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      // Parse the response JSON
+      const data = JSON.parse(xhr.responseText);
+
+      // Do something with the data
+      console.log(data);
+      //document.write(data);
+    } else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 200) {
+      // Handle any errors
+      console.error('Error fetching data:', xhr.status);
+    }
+  };
+
+  // Send the request
+  xhr.send();
+}
+
+// Call the function to fetch the data
+fetchData();
+
+/*
+var xhr = new XMLHttpRequest();
+xhr.open('OPTIONS', 'https://localhost:8443/getdata', true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.setRequestHeader('Authorization', 'Basic ' + btoa('abdou:abdou'));
+
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === XMLHttpRequest.DONE) {
+    if (xhr.status === 200) {
+      
+       document.write("response is :  "+xhr.responseText);
+    } else {
+      // Handle errors or other status codes if needed
+      alert("we have not do it");
+    }
+  }
+};
+
+xhr.send();
+
+*/
+      </script>
+      </div>
+<h1>
+hello
+
+</h1>
+  </body>
+  </html>
+

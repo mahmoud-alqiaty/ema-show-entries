@@ -92,7 +92,6 @@ const Home = () => {
             const headers = {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
             }
             axios.get("https://212.103.189.111:8090/getdata", {
                 headers,
@@ -147,7 +146,7 @@ const Home = () => {
             setStartingDay(res.data.spacCasePage?.StartingDay)
             })
             .catch(err=>{
-                console.log("error from API1: ", err);
+                console.log("error from Api: ", err);
                 swal("فشل استقبال البيانات", "", "error");
             })
           }
