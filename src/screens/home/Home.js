@@ -20,6 +20,7 @@ const Home = () => {
     ]
    
     const [allGenWeatherPoints, setAllGenWeatherPoints] = useState([])
+    const [videoDelay, setVideoDelay] = useState(0)
 
     const [generalMaps, setGeneralMaps] = useState([])
     const [spcMaps, setSpcMaps] = useState([])
@@ -137,6 +138,7 @@ const Home = () => {
             }
             
             setAllGenWeatherPoints(res.data.generalWeatherState)
+            setVideoDelay(res.data.videoDelay)
             setGeneralMaps(res.data.mapsArray)
             setAllSpcWeatherPoints(res.data.spacCasePage?.allSpcWeatherPoints)
             setSpcMaps(res.data.spacCasePage?.spcMaps)
@@ -307,6 +309,7 @@ const Home = () => {
 
 
     const contextValue = {
+        videoDelay, setVideoDelay,
         allGenWeatherPoints, setAllGenWeatherPoints,
         generalMaps, setGeneralMaps,
         spcMaps, setSpcMaps,
@@ -332,6 +335,7 @@ const Home = () => {
         setSubmitting(true) 
         let data = {
             generalWeatherState: allGenWeatherPoints,
+            videoDelay: videoDelay,
             mapsArray: generalMaps,
             regionsTempPage: regions,
             spacCasePage: { 

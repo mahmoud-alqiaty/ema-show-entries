@@ -141,7 +141,7 @@ const SpcState = ({uploadImage, removePreviewImg}) => {
                 <input type='file' onChange={(e)=>uploadImage(e.target.files[0], "spc")} value={SpcInputValue} />
             </div>
 
-            <div className='allPreviews-container'>
+            <div className='allPreviews-container d-flex flex-column flex-md-row'>
                 {
                     uploadspcImg? (
                         <div className='loading-container'>

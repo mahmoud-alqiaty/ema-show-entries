@@ -266,7 +266,7 @@ const Regions = ({setFourDayes}) => {
                                             ['صباحا', 'مساء'].map((t, periodIndex)=>
                                                 <div key={t} className='day-pn-am'>
                                                     <h6>{t}</h6>
-                                                    <div className='d-flex' >
+                                                    <div className='d-flex flex-column flex-md-row' >
                                                         <div>
                                                             <h6>الظاهرة</h6>
                                                             <select 
@@ -361,7 +361,7 @@ const Regions = ({setFourDayes}) => {
                                                         <h6>ملاحظات</h6>
                                                         <textarea 
                                                         rows={4}
-                                                        cols={50}
+                                                        cols={20}
                                                         value={regions.length>0&&regions[regionIndex].weatherData[periodIndex]?.notes}  
                                                         onChange={e=>setRegionNotes(e.target.value, regionName, periodIndex)} 
                                                         />

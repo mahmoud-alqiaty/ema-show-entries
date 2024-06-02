@@ -1,19 +1,35 @@
 import React, { useContext, useState } from 'react'
 import { HomeContext } from '../home/Home'
 import ReactLoading from 'react-loading';
+import removeIcon from '../../images/remove.png'
+import editIcon from '../../images/edit.png'
+
 
 
 
 const GeneralState = ({uploadImage, removePreviewImg}) => {
   const [genWeatherInputValue, setGenWeatherInputValue] = useState("")
+  const [genWeatherPointIdnex, setGenWeatherPointIdnex] = useState(-1)
 
-  const {allGenWeatherPoints, setAllGenWeatherPoints, uploadGenImg, generalMaps, generalInputValue} = useContext(HomeContext)
+  // const [videoDelay, setVideoDelay] = useState(0)
+
+  const {videoDelay, setVideoDelay, allGenWeatherPoints, setAllGenWeatherPoints, uploadGenImg, generalMaps, generalInputValue} = useContext(HomeContext)
 
   //adding general weather state
   const addWeatherPoint = () =>{
     if(genWeatherInputValue.trim() !== ""){
-      setAllGenWeatherPoints([...allGenWeatherPoints, genWeatherInputValue])
+      if(genWeatherPointIdnex>=0){
+        const editedList = allGenWeatherPoints.map((point, index)=> 
+          index == genWeatherPointIdnex? genWeatherInputValue.trim() : point
+        )
+        setAllGenWeatherPoints([...editedList])
+        console.log("no");
+      }else{
+        setAllGenWeatherPoints([...allGenWeatherPoints, genWeatherInputValue])
+        console.log("added");
+      }
       setGenWeatherInputValue("")
+      setGenWeatherPointIdnex(-1)
     }
   }
   //edit general weather state
@@ -29,6 +45,7 @@ const GeneralState = ({uploadImage, removePreviewImg}) => {
     setAllGenWeatherPoints(allGenWeatherPoints.filter((p, pIndex)=> pIndex !== index ))
   }
   const editWeatherPoint = (index) =>{
+    setGenWeatherPointIdnex(index)
     setGenWeatherInputValue(allGenWeatherPoints[index])
   }
 
@@ -36,6 +53,12 @@ const GeneralState = ({uploadImage, removePreviewImg}) => {
   return (
     <>
       <div className='section home-entries'>
+        <div>
+          <h1>
+            بدء الفديو بعد
+          </h1>
+            <input type='number' value={videoDelay} onChange={e=>setVideoDelay(e.target.value)} />
+        </div>
         <h1 className='section-header'>
             حالة الطقس المتوقعة
         </h1>
@@ -53,12 +76,23 @@ const GeneralState = ({uploadImage, removePreviewImg}) => {
                           <span>
                             {point} 
                           </span>
-                          <span onClick={()=>removeWeatherPoint(index)}>
-                            &times;
-                          </span>
-                          <span onClick={()=>editWeatherPoint(index)}>
-                            Edit
-                          </span>
+                          <img
+                           src={removeIcon} alt='حذف' 
+                           onClick={()=>removeWeatherPoint(index)}
+                           width={25}
+                            height={25} 
+                            style={{cursor: "pointer"}}
+                           />
+                          <img 
+                            src={editIcon} alt='تعديل' 
+                            onClick={()=>editWeatherPoint(index)} 
+                            width={25}
+                            height={25}
+                            style={{cursor: "pointer", marginRight: "5px"}}
+                          />
+                          {/* <span onClick={()=>editWeatherPoint(index)}>
+                            تعديل
+                          </span> */}
                         </li>
                         )
                     }
