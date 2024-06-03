@@ -21,6 +21,8 @@ const Home = () => {
    
     const [allGenWeatherPoints, setAllGenWeatherPoints] = useState([])
     const [videoDelay, setVideoDelay] = useState(0)
+    const [videoBackgroundValue, setVideoBackgroundValue] = useState(1)
+
 
     const [generalMaps, setGeneralMaps] = useState([])
     const [spcMaps, setSpcMaps] = useState([])
@@ -92,7 +94,6 @@ const Home = () => {
         const getallData = async () =>{
             const headers = {
                 Accept: 'application/json',
-                // 'Content-Type': 'application/json',
             }
             axios.get("https://212.103.189.111:8090/getdata", {
                 headers,
@@ -139,6 +140,7 @@ const Home = () => {
             
             setAllGenWeatherPoints(res.data.generalWeatherState)
             setVideoDelay(res.data.videoDelay)
+            setVideoBackgroundValue(res.data.videoBackgroundValue)
             setGeneralMaps(res.data.mapsArray)
             setAllSpcWeatherPoints(res.data.spacCasePage?.allSpcWeatherPoints)
             setSpcMaps(res.data.spacCasePage?.spcMaps)
@@ -310,6 +312,7 @@ const Home = () => {
 
     const contextValue = {
         videoDelay, setVideoDelay,
+        videoBackgroundValue, setVideoBackgroundValue,
         allGenWeatherPoints, setAllGenWeatherPoints,
         generalMaps, setGeneralMaps,
         spcMaps, setSpcMaps,
@@ -336,6 +339,7 @@ const Home = () => {
         let data = {
             generalWeatherState: allGenWeatherPoints,
             videoDelay: videoDelay,
+            videoBackgroundValue: videoBackgroundValue,
             mapsArray: generalMaps,
             regionsTempPage: regions,
             spacCasePage: { 

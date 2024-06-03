@@ -28,6 +28,23 @@ input:not("[type: radio]"){
     text-align: end;
 }
 
+.videoRadio{
+    display: flex;
+    width: 100%;
+    max-width: 300px;
+
+}
+.videoRadio input{
+    width: 20px !important;
+    margin-left: 5px;
+
+}
+.videoRadio img{
+    /* width: 80% !important; */
+    flex: 1;
+    max-width: 270px;
+
+}
 .adding-btn{
     font-size: 23px;
     font-weight: bold;
@@ -166,6 +183,7 @@ input:not("[type: radio]"){
 
 .region input, .region select{
     height: 40px;
+    max-width: 100%;
     font-size: 18px;
     font-weight: bold;
 }

@@ -21,6 +21,7 @@ const Regions = ({setFourDayes}) => {
     const {regionsNames, regions, setRegions, phenomenaOptions, rainWeight, fourDates} = useContext(HomeContext)
 
     const [displayRegions, setDisplayRegions] = useState(false)
+    const [displaySeas, setDisplaySeas] = useState(false)
 
 
     const setRegionMaxTemp = (value, regionName, dayIndex)=>{
@@ -232,7 +233,11 @@ const Regions = ({setFourDayes}) => {
             <p>
             حالة الطقس على مناطق الجمهورية
             </p>
-            <img src={displayRegions? upArrow : downArrow} alt='' onClick={()=> setDisplayRegions(!displayRegions)} />
+            <img 
+                src={displayRegions? upArrow : downArrow} alt='' 
+                onClick={()=> setDisplayRegions(!displayRegions)} 
+                style={{cursor: "pointer"}}
+            />
             
         </h1>
 
@@ -321,43 +326,44 @@ const Regions = ({setFourDayes}) => {
                                                         </div>
                                                         {
                                                             regions.length>0&&(regions[regionIndex].weatherData[t === 'صباحا' ? 0 : 1].icon === "أمطار" || regions[regionIndex].weatherData[t === 'صباحا' ? 0 : 1].icon === 'مطر رعدي' || regions[regionIndex].weatherData[t === 'صباحا' ? 0 : 1].icon === 'نشاط رياح + أمطار') ?
-                                                            (
-                                                                <>
-                                                                <div>
-                                                                    <h6>نسبة الامطار</h6>
-                                                                    <input 
-                                                                    type='number'
-                                                                    value={regions.length>0&&regions[regionIndex].weatherData[t === 'صباحا' ? 0 : 1]?.rainPercentage}  
-                                                                    onChange={e=>setRegionRainPercentage(e.target.value, regionName, periodIndex)} 
-                                                                    />
-                                                                </div>
+                                                            // (
+                                                            //     <>
+                                                            //         <div>
+                                                            //             <h6>نسبة الامطار</h6>
+                                                            //             <input 
+                                                            //             type='number'
+                                                            //             value={regions.length>0&&regions[regionIndex].weatherData[t === 'صباحا' ? 0 : 1]?.rainPercentage}  
+                                                            //             onChange={e=>setRegionRainPercentage(e.target.value, regionName, periodIndex)} 
+                                                            //             />
+                                                            //         </div>
 
-                                                                <div>
-                                                                    <h6>شدة الأمطار</h6>
-                                                                    <select 
-                                                                    value={regions.length>0&&regions[regionIndex].weatherData[t === 'صباحا' ? 0 : 1]?.rainingWeight}  
-                                                                    onChange={e=>setRainingWeight(e.target.value, regionName, periodIndex)}
-                                                                    >
-                                                                        <option value=''>-------</option>
-                                                                        
-                                                                        {
-                                                                            rainWeight.map((weight, index)=>
-                                                                            <option key={index} value={weight}>
-                                                                                {weight}
-                                                                            </option> 
-                                                                            )
-                                                                        }
-                                                                    </select>
-                                                                </div>
-                                                                </>
+                                                            //         <div>
+                                                            //             <h6>شدة الأمطار</h6>
+                                                            //             <select 
+                                                            //             value={regions.length>0&&regions[regionIndex].weatherData[t === 'صباحا' ? 0 : 1]?.rainingWeight}  
+                                                            //             onChange={e=>setRainingWeight(e.target.value, regionName, periodIndex)}
+                                                            //             >
+                                                            //                 <option value=''>-------</option>
+                                                                            
+                                                            //                 {
+                                                            //                     rainWeight.map((weight, index)=>
+                                                            //                     <option key={index} value={weight}>
+                                                            //                         {weight}
+                                                            //                     </option> 
+                                                            //                     )
+                                                            //                 }
+                                                            //             </select>
+                                                            //         </div>
+                                                            //     </>
                                                                 
-                                                            ):null
+                                                            // )
+                                                            null:null
                                                         }
                                                         
                                                         
                                                     </div>
 
-                                                    <div className='w-100 mt-3'>
+                                                    <div className='w-100 mt-3 d-none'>
                                                         <h6>ملاحظات</h6>
                                                         <textarea 
                                                         rows={4}
@@ -411,7 +417,7 @@ const Regions = ({setFourDayes}) => {
                                                         value={regions.length>0&&regions[regionIndex].weatherData[dayIndex + 2].minTemp}  
                                                         />
                                                     </div>
-                                                    <div>
+                                                    <div className='d-none'>
                                                         <h6>سرعة رياح</h6>
                                                         <input 
                                                         type='number' 
@@ -421,16 +427,17 @@ const Regions = ({setFourDayes}) => {
                                                     </div>
                                                     {
                                                             regions.length>0&&(regions[regionIndex].weatherData[dayIndex + 2].icon === "أمطار" || regions[regionIndex].weatherData[dayIndex + 2].icon === 'مطر رعدي' || regions[regionIndex].weatherData[dayIndex + 2].icon === 'نشاط رياح + أمطار')  ?
-                                                            (
-                                                                <div>
-                                                                    <h6>نسبة الامطار</h6>
-                                                                    <input 
-                                                                    type='number'
-                                                                    value={regions.length>0&&regions[regionIndex].weatherData[dayIndex + 2]?.rainPercentage}  
-                                                                    onChange={e=>setRegionRainPercentage(e.target.value, regionName, dayIndex + 2)} 
-                                                                    />
-                                                                </div>
-                                                            ):null
+                                                            // (
+                                                            //     <div>
+                                                            //         <h6>نسبة الامطار</h6>
+                                                            //         <input 
+                                                            //         type='number'
+                                                            //         value={regions.length>0&&regions[regionIndex].weatherData[dayIndex + 2]?.rainPercentage}  
+                                                            //         onChange={e=>setRegionRainPercentage(e.target.value, regionName, dayIndex + 2)} 
+                                                            //         />
+                                                            //     </div>
+                                                            // )
+                                                            null:null
                                                         }
 
                                                 </div>
@@ -448,7 +455,16 @@ const Regions = ({setFourDayes}) => {
 
         
         <div>
+            <p className='w-50 d-flex'>
             <h2>حالة البحرين</h2>
+            <img 
+                src={displaySeas? upArrow : downArrow} alt='' 
+                onClick={()=> setDisplaySeas(!displaySeas)} 
+                style={{cursor: "pointer"}}
+            />
+            </p>
+            {
+                displaySeas?(
             <div className='region ms'>
                 
 
@@ -581,6 +597,9 @@ const Regions = ({setFourDayes}) => {
                     )
                 }
             </div>
+
+                ):null
+            }   
 
         </div>    
 

@@ -4,6 +4,11 @@ import ReactLoading from 'react-loading';
 import removeIcon from '../../images/remove.png'
 import editIcon from '../../images/edit.png'
 
+import videoOne from '../../images/videoOne.png'
+import videoTwo from '../../images/videoTwo.png'
+import videoThree from '../../images/videoThree.png'
+import videoFour from '../../images/videoFour.png'
+
 
 
 
@@ -13,7 +18,7 @@ const GeneralState = ({uploadImage, removePreviewImg}) => {
 
   // const [videoDelay, setVideoDelay] = useState(0)
 
-  const {videoDelay, setVideoDelay, allGenWeatherPoints, setAllGenWeatherPoints, uploadGenImg, generalMaps, generalInputValue} = useContext(HomeContext)
+  const {videoDelay, setVideoDelay, videoBackgroundValue, setVideoBackgroundValue, allGenWeatherPoints, setAllGenWeatherPoints, uploadGenImg, generalMaps, generalInputValue} = useContext(HomeContext)
 
   //adding general weather state
   const addWeatherPoint = () =>{
@@ -49,15 +54,83 @@ const GeneralState = ({uploadImage, removePreviewImg}) => {
     setGenWeatherInputValue(allGenWeatherPoints[index])
   }
 
+  function setVideoBackgroundVlaue(e){
+    const numberedValue = +(e.target.value)
+    setVideoBackgroundValue(numberedValue)
+}
+
 
   return (
     <>
       <div className='section home-entries'>
         <div>
           <h1>
-            بدء الفديو بعد
+            اعدادات عامة
           </h1>
-            <input type='number' value={videoDelay} onChange={e=>setVideoDelay(e.target.value)} />
+          <div>
+            <h3>
+              فديو الصفحة الرئيسية
+            </h3>
+            <div className='videoRadio'>
+                <input 
+                  type="radio" 
+                  onChange={setVideoBackgroundVlaue} 
+                  id="videoOne" 
+                  name="video_background" 
+                  value="1" 
+                />
+                <label for="videoOne">
+                    <img 
+                      src={videoOne}
+                      alt="videoOne"
+                    />
+                </label>
+            </div>
+            <div className='videoRadio'>
+                <input type="radio" onChange={setVideoBackgroundVlaue} id="videoThree" name="video_background" value="3" />
+                <label for="videoThree">
+                    <img 
+                      src={videoThree}
+                      alt="videoThree"
+                    />
+                </label>
+            </div>
+            <div className='videoRadio'>
+                <input 
+                  type="radio" 
+                  onChange={setVideoBackgroundVlaue} 
+                  id="videoFour" 
+                  name="video_background" 
+                  value="4" 
+                />
+                <label for="videoFour">
+                    <img 
+                      src={videoFour}
+                      alt="videoFour"
+                    />
+                </label>
+            </div>
+            <div className='videoRadio'>
+              <input type="radio" onChange={setVideoBackgroundVlaue} id="videoTwo" name="video_background" value="2" />
+              <label for="videoTwo">
+                  <img 
+                    src={videoTwo}
+                    alt="videoTwo"
+                  />
+              </label>
+            </div>
+            {
+              videoBackgroundValue==2? (
+                <>
+                  <h1>
+                    بدء الفديو بعد
+                  </h1>
+                  <input type='number' value={videoDelay} onChange={e=>setVideoDelay(e.target.value)} />
+                </>
+              ):null
+            }
+
+          </div>
         </div>
         <h1 className='section-header'>
             حالة الطقس المتوقعة
