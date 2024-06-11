@@ -45,6 +45,7 @@ const Home = () => {
     const [subTitle, setSubTitle] = useState("")
 
     const [StartingDay, setStartingDay] = useState(-1)
+    const [spacCaseType, setSpacCaseType] = useState("")
 
     const [spcWeatherInputValue, setSpcWeatherInputValue] = useState("")
     const [spcWarningInputValue, setSpcWarningInputValue] = useState("")
@@ -148,6 +149,7 @@ const Home = () => {
             setMainTitle(res.data.spacCasePage?.mainTitle)
             setSubTitle(res.data.spacCasePage?.subTitle)
             setStartingDay(res.data.spacCasePage?.StartingDay)
+            setSpacCaseType(res.data.spacCasePage?.spacCaseType)
             })
             .catch(err=>{
                 console.log("error from Api: ", err);
@@ -329,7 +331,7 @@ const Home = () => {
         spcWarningInputValue, setSpcWarningInputValue,
         allSpcWarningPoints, setAllSpcWarningPoints,
         regionsNames, phenomenaOptions, rainWeight,
-        setStartingDay
+        setStartingDay, setSpacCaseType, spacCaseType
     }
 
 
@@ -346,6 +348,7 @@ const Home = () => {
                 mainTitle,
                 subTitle,
                 StartingDay,
+                spacCaseType,
                 allSpcWeatherPoints,
                 allSpcWarningPoints,
                 spcMaps

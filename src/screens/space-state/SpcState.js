@@ -6,7 +6,7 @@ import ReactLoading from 'react-loading';
 
 const SpcState = ({uploadImage, removePreviewImg}) => {
     
-    const {mainTitle, setMainTitle, subTitle, setSubTitle, allSpcWeatherPoints, allSpcWarningPoints, spcWeatherInputValue, setSpcWeatherInputValue, spcWarningInputValue, setSpcWarningInputValue, SpcInputValue, uploadspcImg, spcMaps, setAllSpcWeatherPoints, setAllSpcWarningPoints, setStartingDay} = useContext(HomeContext)
+    const {mainTitle, setMainTitle, subTitle, setSubTitle, allSpcWeatherPoints, allSpcWarningPoints, spcWeatherInputValue, setSpcWeatherInputValue, spcWarningInputValue, setSpcWarningInputValue, SpcInputValue, uploadspcImg, spcMaps, setAllSpcWeatherPoints, setAllSpcWarningPoints, setStartingDay, setSpacCaseType} = useContext(HomeContext)
 
      //adding spc weather state
      const addSpcWeatherPoint = () =>{
@@ -44,6 +44,23 @@ const SpcState = ({uploadImage, removePreviewImg}) => {
         حالة خاصة
     </h1>
     <div className='title-section inner-section'>
+        <div>
+            <h2>نوع الحالة</h2>
+            <div className='spc-case-start'>
+                <div>
+                    <input type="radio" onChange={(e)=>setSpacCaseType(e.target.value)} id="thunder" name="spcCaseType" value="thunder" />
+                    <label for="thunder">عدم استقرار</label>
+                </div>
+                <div>
+                    <input type="radio" onChange={(e)=>setSpacCaseType(e.target.value)} id="heatWave" name="spcCaseType" value="heatWave" />
+                    <label for="heatWave">موجة حارة</label>
+                </div>
+                <div>
+                    <input type="radio" onChange={(e)=>setSpacCaseType(e.target.value)} id="sandStorm" name="spcCaseType" value="sandStorm" />
+                    <label for="sandStorm">عاصفة رملية</label>
+                </div>
+            </div>
+        </div>
         <div>
             <h2>عنوان رئيسي</h2>
             <div>
